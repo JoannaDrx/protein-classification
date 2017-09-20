@@ -3,6 +3,12 @@ Model for training
 How is this even supposed to look
 """
 
+# https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
+# https://www.datacamp.com/community/tutorials/machine-learning-python#gs.AsFJLjQ
+# https://github.com/mhorlbeck/CRISPRiaDesign/blob/master/Library_design_walkthrough.md
+# https://pypi.python.org/pypi/pydpi/1.0
+# http://scikit-bio.org/docs/0.1.4/core.alignment.html
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import sklearn
@@ -17,10 +23,19 @@ print ts.shape
 print ts.head(20)
 ts.groupby('label').size()
 
-# pca here
 # plots here
+plt.hist(ts["label"])
+plt.show()
 
-## 1. Sequence homology with known '1' proteins
+# plot base position colored by label
+
+# pca here?
+
+
+## 1. Sequence homology
+
+pct = 0.9  # set at 90% homology
+cmd = './vsearch --usearch_global queries.fsa --db database.fsa --id {} --alnout alnout.txt'.format(pct)
 
  # > NCBI's blastp:
  #   https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE=Proteins
@@ -62,6 +77,21 @@ ts.groupby('label').size()
 #    https://pypi.python.org/pypi/pydpi/1.0
 
 # 4. Extras
+
+# numeric components
+# length, AA content,
+
+from sklearn.cluster import KMeans
+
+# Initialize the model with 2 parameters -- number of clusters and random state.
+kmeans_model = KMeans(n_clusters=5, random_state=1)
+# Get only the numeric columns from games.
+good_columns = games._get_numeric_data()
+# Fit the model using the good columns.
+kmeans_model.fit(good_columns)
+# Get the cluster assignments.
+labels = kmeans_model.labels_
+
 
 # add whatever features you deem necissary from the
 # primary sequences to accomplish the classification task, but these should
