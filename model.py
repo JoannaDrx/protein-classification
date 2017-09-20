@@ -1,6 +1,9 @@
 """
 Model for training
-How is this even supposed to look
+nice description here
+
+@author: Joanna Dreux
+joanna.dreux@gmail.com
 """
 
 # https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
@@ -8,43 +11,97 @@ How is this even supposed to look
 # https://github.com/mhorlbeck/CRISPRiaDesign/blob/master/Library_design_walkthrough.md
 # https://pypi.python.org/pypi/pydpi/1.0
 # http://scikit-bio.org/docs/0.1.4/core.alignment.html
+# follow iris dataset methodology
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import sklearn
+from Bio import SeqIO, SearchIO, Alphabet
+import os
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+from Bio import SeqIO
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.Alphabet import IUPAC
+from Bio.Blast.Applications import NcbiblastpCommandline
+
+# STEP 1: Import and eyeball the data
 
 # import the training set
-training_set = '/Users/joanna/Desktop/SG_GDS_Challenge_092017 2/drugpro_training_set.csv'
+training_set = '/Users/joanna/PycharmProjects/second_genome/drugpro_training_set.csv'
 names = ['id', 'seq', 'label']
 ts = pd.read_csv(training_set, header=0)
 
-# check out the data
+# check out the data dimensions
 print ts.shape
 print ts.head(20)
 ts.groupby('label').size()
+# numbers here
+#label
+#0    220
+#1     44
 
-# plots here
-plt.hist(ts["label"])
-plt.show()
+# just from eyeballing the data, there is high sequence homology between the 1s
+# convert training set to correct file format
+# write label 1s as fasta file
+seq_list = []
+for id, seq, label in ts.itertuples(index=False):
+        pos_seq = SeqRecord(Seq(seq, Alphabet.IUPAC.protein), id=id+str("--label:"+str(label)), description="", name="")
+        seq_list.append(pos_seq)
 
-# plot base position colored by label
+# write FASTA
+handle = open('/Users/joanna/PycharmProjects/second_genome/training_seqs.fasta',"w")
+for sequences in seq_list:
+    SeqIO.write(sequences, handle, "fasta")
 
-# pca here?
+# STEP 2: Sequence homology analysis with BLAST-P
+# blast the 1s against each other
+
+query = '/Users/joanna/PycharmProjects/second_genome/sg_putative_10000.faa'
+subject = '/Users/joanna/PycharmProjects/second_genome/training_seqs.fasta'
+out_blastp = '/Users/joanna/PycharmProjects/second_genome/align_to_1.tab'
+
+blastp_cline = NcbiblastpCommandline(query=query, subject=subject, evalue=1e-7, outfmt=6, out=out_blastp)
+print blastp_cline
+stdout, stderr = blastp_cline()
+
+# read the results
+df = pd.read_table(out_blastp, header=None)
+default_outfmt6_cols = 'qseqid sseqid pident len mm gapopen qstart qend sstart send evalue bitscore'.strip().split(' ')
+df.columns = default_outfmt6_cols
+
+# filter for pident >= 90.0
+df_filtered = df[df['pident'] >= 90.0]
 
 
-## 1. Sequence homology
+# look at top matches
+# sort by bitscore
+df_filtered.sort_values(by='bitscore', ascending=False, inplace=True)
+# df_filtered is now sorted by bitscore in descending order
+top10_query_ids = df_filtered['qseqid'][0:10]
 
-pct = 0.9  # set at 90% homology
-cmd = './vsearch --usearch_global queries.fsa --db database.fsa --id {} --alnout alnout.txt'.format(pct)
+# positive matches
+pos_matches = df_filtered[df_filtered['sseqid'].str.contains('label:1')]
 
- # > NCBI's blastp:
- #   https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE=Proteins
+# negative matches
+neg_matches = df_filtered[df_filtered['sseqid'].str.contains('label:0')]
 
- # > vsearch - a fast heuristic-based sequence identity search
-#    https://github.com/torognes/vsearch
+# neutral matches
+# seqs not represented - annotate as x
 
-#There are many others. If you choose to leverage sequence identity in your
-#method, feel free to use whichever tool you deem most appropriate.
+query_list = []
+for record in SeqIO.parse(query, "fasta"):
+    query_list.append(record.id)
+
+# make an annotation csv
+annotation_csv = '/Users/joanna/PycharmProjects/second_genome/seq_homology_annotation.csv'
+header = ['seq_id', 'seq_homology']
+
+with open(annotation_csv, 'w') as f:
+    f.write(header)
+    for match in pos_matches
+
 
 # 2. Hidden Markov Models -- domain similarity
 
@@ -112,6 +169,15 @@ labels = kmeans_model.labels_
 # learning algorithm, like Naive Bayes while slimming down the data into that which PCA has identified as important.
 
 
+# write annotation
+# make an annotation csv
+annotation_csv = '/Users/joanna/PycharmProjects/second_genome/annotation.csv'
+header = ['seq_id', 'seq_homology', 'domain_homology', 'ml_homology']
+
+with open(annotation_csv, 'w') as f:
+    f.write(header)
+
+
 ### Evaluation  ###
 
 #DrugPro has agreed to synthesize and test 200 proteins of your choice in their
@@ -134,24 +200,3 @@ labels = kmeans_model.labels_
 #value returned by your Top 200 nominations.  Obviously you could pretty
 #easily use this dictionary to just go and search for high-valued proteins
 #directly in the set of 10000, but that wouldn't make for a very good presentation.
-
-########
-# code documentation
-# communicaiton plan
-# powerpoint slides
-
-#  > a brief description of the problem (it helps to hear your version of it)
-#  > a brief description of the data
-#  > your choice of features engineered from the protein sequences
-#  > your feature selection methodolgy, if any
-#  > your choice of model or models
-#  > your validation method(s)
-#  > the quality of your model ($$$)
-
-
-#Define Problem.
-#Prepare Data.
-#Evaluate Algorithms.
-#Improve Results.
-#Present Results.
-
