@@ -136,5 +136,5 @@ Endotoxin_N          PF03945.13   223 02212edc777c588b7607edaa07852650 -        
 # Target file:     /Users/joannadreux/Desktop/hmm/Pfam-A.hmm
 # Option settings: hmmscan --domtblout out_hmmer.txt --noali --domE 1e-05 --cpu 8 /Users/joannadreux/Desktop/hmm/Pfam-A.hmm training_seqs_valid.fasta 
 # Current dir:     /Users/joannadreux/PycharmProjects/protein-classification
-# Date:            Sat Sep 23 00:11:35 2017
+# Date:            Sat Sep 23 11:29:26 2017
 # [ok]

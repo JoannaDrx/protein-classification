@@ -1130,5 +1130,5 @@ Endotoxin_M          PF00555.18   205 51ea8f7b07f84b0ad8bf977549218c4f -        
 # Target file:     ./endotoxins-hmm/endotoxins.hmm
 # Option settings: hmmscan --domtblout out_hmmer_endo_only.txt --noali --domE 1 --cpu 8 ./endotoxins-hmm/endotoxins.hmm training_seqs_all.fasta 
 # Current dir:     /Users/joannadreux/PycharmProjects/protein-classification
-# Date:            Sat Sep 23 00:37:32 2017
+# Date:            Sat Sep 23 11:38:40 2017
 # [ok]

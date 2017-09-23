@@ -10,8 +10,13 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 from Bio.Blast.Applications import NcbiblastpCommandline
+from collections import Counter
+from operator import itemgetter
 from pandas.tools.plotting import scatter_matrix
 #from sklearn import model_selection
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.svm import LinearSVC
+from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
@@ -34,6 +39,7 @@ from sklearn.feature_selection import chi2
 import pickle
 from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
+import utils
 
 # cwd
 os.chdir('/Users/joannadreux/PycharmProjects/protein-classification/')
@@ -66,19 +72,8 @@ for sequences in valid_list:
 for sequences in all:
     SeqIO.write(sequences, handle2, "fasta")
 
-def run_parse_blast(query, subject, threshold, out_file):
-
-    # run blastp
-    blastp_cline = NcbiblastpCommandline(query=query, subject=subject, evalue=threshold, outfmt=6, out=out_file)
-    stdout, stderr = blastp_cline()
-
-    # read & filter the blast results
-    df = pd.read_table(out_blastp, header=None)
-    blast_header = 'qseqid sseqid pident len mm gapopen qstart qend sstart send evalue bitscore'.strip().split(' ')
-    df.columns = blast_header
-    return df
-
-df_blast = run_parse_blast(query, subject, 1, out_blastp)
+# run BLASTp
+df_blast = utils.run_parse_blast(query, subject, 1, out_blastp)
 # filter
 df_blast = df_blast[df_blast['pident'] != 100.0]  # remove identical hits
 print df_blast.shape
@@ -114,37 +109,64 @@ fig.set_tight_layout(True)
 out_hmmer = 'out_hmmer.txt'
 pfam_db = '/Users/joannadreux/Desktop/hmm/Pfam-A.hmm'
 
-def run_parse_hmmer(threshold, out_file, pfam_db, subject):
-
-    cmd = 'hmmscan --domE {} --domtblout {} --noali --cpu 8 {} {} > /dev/null'.format(threshold, out_file, pfam_db,
-                                                                                      subject)
-    os.system(cmd)
-    # read the results, select relevant cols
-    df = pd.read_table(out_file, header=None, engine='python', skiprows=3, skipfooter=10, sep='\s+',
-                           usecols=[0,1,3,5,6,7,11,12,13,15,16,17,18,19,20,21])
-    hmm_header = 'target acc qname qlen e-value score c-evalue i-evalue domain-score hf ht af at ef et reliability'.strip().split(' ')
-    df.columns = hmm_header
-    return df
-
 # run analysis on label=1 only
-df_hmm = run_parse_hmmer(1e-5, out_hmmer, pfam_db, subject)
+df_hmm = utils.run_parse_hmmer(1e-5, out_hmmer, pfam_db, subject)
 print df_hmm.shape
 print len(set(df_hmm['qname']))
 print set(df_hmm['acc'])  # only 3 domains
+df_hmm.groupby('qname')['acc'].count()  # one missing, one has only one
 
+# We run the analysis again but against each endo domain individually
+# use .hmm files obtained from - http://pfam.xfam.org/
+out_endoC = 'out_endoC.txt'
+out_endoM = 'out_endoM.txt'
+out_endoN = 'out_endoN.txt'
+endoC = './endotoxins-hmm/Endotoxin_C.hmm'
+endoM = './endotoxins-hmm/Endotoxin_C.hmm'
+endoN = './endotoxins-hmm/Endotoxin_C.hmm'
 
-# we build a custom HMM reference from our three domains of interest - http://pfam.xfam.org/
-# run the analysis again against this reference with the whole training set
-out_hmmer_endo = 'out_hmmer_endo_only.txt'
-pfam_db_endo = './endotoxins-hmm/endotoxins.hmm'
-df_endo = run_parse_hmmer(1, out_hmmer_endo, pfam_db_endo, query)  # threshold = 1, allow all alignments
+# generate a df for each
+df_C = utils.run_parse_hmmer(1, out_endoC, endoC, query)  # threshold = 1, allow all alignments
+df_M = utils.run_parse_hmmer(1, out_endoM, endoM, query)
+df_N = utils.run_parse_hmmer(1, out_endoN, endoN, query)
 
-# we need one row per qname
-df_endo = df_endo.groupby('qname', as_index=False).sum()
+# desc here
+df_C = utils.clean_up_hmm(df_C,'C')
+df_M = utils.clean_up_hmm(df_M, "M")
+df_N = utils.clean_up_hmm(df_N, "N")
 
-# add label
-df_endo['label'] = 0  # set default value
-df_endo.loc[(df_endo['qname'].isin(valids)), 'label'] = 1  # set to 1 for valids
+# Concat into one table
+# first make sure all the queries are represented and sorted
+assert set(df_C.qname_C == df_N.qname_N) == {True}
+assert set(df_C.qname_C == df_M.qname_M) == {True}
+
+# drop duplicated columns
+df_M = df_M.drop(['qname_M', 'qlen_M'], axis=1)
+df_N = df_N.drop(['qname_N', 'qlen_N'], axis=1)
+frames = [df_C, df_M, df_N]
+master = pd.concat(frames, ignore_index=True, axis=1)
+master.columns = list(df_C.columns) + list(df_M.columns) + list(df_N.columns)
+print master.shape
+
+# add label column
+master['label'] = 0  # set default value
+master.loc[(master['qname_C'].isin(valids)), 'label'] = 1  # set to 1 for valids
+print master.shape
+
+# select features
+array = master.values
+X = array[:, 1:41]
+Y = list(array[:, 41])
+feature_names = list(master.columns[1:42])
+hits = utils.select_features(X, Y, 10, feature_names)
+# Select K Best selected features: ['qlen_C', 'domain-score_C', 'domain-score_M', 'hf_M', 'domain-score_N', 'hf_N']
+# RFE selected features: ['af_C', 'ef_C', 'af_M', 'ef_M', 'af_N', 'ef_N']
+# Extra Trees Classifier selected features: ['reliability_M', 'reliability_C', 'one_of_each', 'domain-score_M',
+# 'score_N', 'hf_M']
+
+# we retain score_N, score_M, score_C, hf_N, hf_M, hf_C
+keep = ['score_N', 'score_M', 'score_C', 'hf_N', 'hf_M', 'hf_C']
+master = master[['qname_C'] + keep]
 
 
 ### Physicochemical features homology using pydpi
