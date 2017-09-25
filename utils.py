@@ -8,8 +8,7 @@ from Bio.Blast.Applications import NcbiblastpCommandline
 from collections import Counter
 from operator import itemgetter
 from pandas.tools.plotting import scatter_matrix
-#from sklearn import model_selection
-from sklearn.feature_selection import VarianceThreshold
+from sklearn import model_selection
 from sklearn.svm import LinearSVC
 from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import classification_report
@@ -68,7 +67,7 @@ def select_features(X, Y, num_features, feature_names):
     Returns the index of the features """
 
     # K Best
-    test = SelectKBest(score_func=chi2, k=num_features)
+    test = SelectKBest(k=num_features)
     fit = test.fit(X, Y)
     k_features = unmask(fit.get_support(), feature_names)
     print 'Select K Best selected features:', k_features
@@ -104,11 +103,10 @@ def unmask(mask, names):
 
 def clean_up_hmm(df, suffix):
     """ For each df add a column counting the # of domains, then get the mean to collapse into single row/query"""
-    df = df.drop(['target', 'acc'], axis=1)
-    df['count'] = df.groupby('qname')['qname'].transform('count')
-    df = df.groupby('qname', as_index=False).mean()
 
-    df = df.add_suffix('_'+suffix)
+    df = df.drop(['target', 'acc'], axis=1)
+    df = df.groupby('qname', as_index=False).mean()  # average out multiple domains
+    df = df.add_suffix('_' + suffix)
     print df.shape
     print df.columns
 

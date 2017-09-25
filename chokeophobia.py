@@ -9,42 +9,22 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
-from Bio.Blast.Applications import NcbiblastpCommandline
-from collections import Counter
-from operator import itemgetter
-from pandas.tools.plotting import scatter_matrix
-#from sklearn import model_selection
-from sklearn.feature_selection import VarianceThreshold
-from sklearn.svm import LinearSVC
-from sklearn.feature_selection import SelectFromModel
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
-from sklearn import linear_model
-from sklearn.ensemble import ExtraTreesClassifier
-import numpy as np
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
 from pydpi.pypro import PyPro
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-import pickle
-from sklearn.feature_selection import RFE
+from sklearn import model_selection
+from sklearn.svm import LinearSVC, SVC
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
+import matplotlib.pyplot as plt
 import utils
 
 # cwd
 os.chdir('/Users/joannadreux/PycharmProjects/protein-classification/')
 
-### Load the Data
+### Collect and clean data  ###
+# Load the training set data
 training_set = 'drugpro_training_set.csv'
 ts = pd.read_csv(training_set, header=0)
 ts.groupby('label').size()
@@ -52,67 +32,41 @@ ts.groupby('label').size()
 # 0    220
 # 1     44
 
-### BLAST - sequence homology
+# Write FASTAs from training set data
 subject = 'training_seqs_valid.fasta'
 query = 'training_seqs_all.fasta'
-out_blastp = 'blast/blastp_out.tab'
-
-# Convert training set to FASTA file format, annotate with label
 valid_list = []
-all = []
+all_prots = []
 for id, seq, label in ts.itertuples(index=False):
     seq_record = SeqRecord(Seq(seq, IUPAC.protein), id=id, description="Label:"+str(label), name="")
-    all.append(seq_record)
+    all_prots.append(seq_record)
     if label == 1:
             valid_list.append(seq_record)
 handle = open(subject, "w")
 handle2 = open(query, "w")
 for sequences in valid_list:
     SeqIO.write(sequences, handle, "fasta")
-for sequences in all:
+for sequences in all_prots:
     SeqIO.write(sequences, handle2, "fasta")
 
-# run BLASTp
-df_blast = utils.run_parse_blast(query, subject, 1, out_blastp)
-# filter
-df_blast = df_blast[df_blast['pident'] != 100.0]  # remove identical hits
+
+## Collect BLASTp data - sequence homology ##
+out_blastp = 'blast/blastp_out.tab'
+df_blast_master = utils.run_parse_blast(query, subject, 1, out_blastp)
+# tidy the table
+df_blast = df_blast_master[df_blast_master['pident'] != 100.0]  # remove identical hits
+df_blast = df_blast.drop('sseqid', axis=1) # drop the reference column
+df_blast = df_blast.drop_duplicates(subset=['qseqid'], keep='first') # only keep top hit, alignments reported by top hit
 print df_blast.shape
-# only keep top hit, alignments are reported by best hit
-df_blast = df_blast.drop_duplicates(subset=['qseqid'], keep='first')
-print df_blast.shape
-
-# clean up BLAST data - drop the reference column and add a Label column to see correlation
-df_blast = df_blast.drop('sseqid', axis=1)
-df_blast['label'] = 0  # set default value
-valids = ts[ts['label'] == 1]['id']  # list of valid prots ids
-df_blast.loc[(df_blast['qseqid'].isin(valids)), 'label'] = 1  # set to 1 for valids
-
-# find correlation (+/- 0.5)
-print df_blast.corr()['label']
-co_cols = df_blast.corr()['label']
-keep = co_cols[(co_cols > 0.7) | (co_cols < -0.7)]  # keep % identical bases, mismatches & bitScore
-df_blast = df_blast[['qseqid'] + list(keep.index)]
-
-# plot the two distributions
-matches = df_blast[df_blast['label'] == 1]  # valid prot alignments, all 44
-non_matches = df_blast[df_blast['label'] == 0]  # invalid prot alignments
-fig, axes = plt.subplots(3, 1)
-for ax, val in zip(axes.flatten(), df_blast.columns[1:4]):
-    ax.hist(matches[val].values, alpha=0.5)
-    ax.hist(non_matches[val].values, alpha=0.5)
-    ax.set_title(val)
-fig.set_tight_layout(True)
 
 
-### Hidden Markov Models -- domain similarity
-# against valid proteins in training set, find domains of interest
+## Collect domain similarity data - Hidden Markov Models ##
+# first, run valid prots against Pfam-A.hmm to find domains of interest
 out_hmmer = 'out_hmmer.txt'
 pfam_db = '/Users/joannadreux/Desktop/hmm/Pfam-A.hmm'
-
-# run analysis on label=1 only
 df_hmm = utils.run_parse_hmmer(1e-5, out_hmmer, pfam_db, subject)
 print df_hmm.shape
-print len(set(df_hmm['qname']))
+print len(set(df_hmm['qname'])) # all are represented
 print set(df_hmm['acc'])  # only 3 domains
 df_hmm.groupby('qname')['acc'].count()  # one missing, one has only one
 
@@ -122,187 +76,180 @@ out_endoC = 'out_endoC.txt'
 out_endoM = 'out_endoM.txt'
 out_endoN = 'out_endoN.txt'
 endoC = './endotoxins-hmm/Endotoxin_C.hmm'
-endoM = './endotoxins-hmm/Endotoxin_C.hmm'
-endoN = './endotoxins-hmm/Endotoxin_C.hmm'
+endoM = './endotoxins-hmm/Endotoxin_M.hmm'
+endoN = './endotoxins-hmm/Endotoxin_N.hmm'
 
 # generate a df for each
 df_C = utils.run_parse_hmmer(1, out_endoC, endoC, query)  # threshold = 1, allow all alignments
 df_M = utils.run_parse_hmmer(1, out_endoM, endoM, query)
 df_N = utils.run_parse_hmmer(1, out_endoN, endoN, query)
 
-# desc here
-df_C = utils.clean_up_hmm(df_C,'C')
-df_M = utils.clean_up_hmm(df_M, "M")
-df_N = utils.clean_up_hmm(df_N, "N")
+# tidy up the tables
+df_C = utils.clean_up_hmm(df_C, 'C')
+df_M = utils.clean_up_hmm(df_M, 'M')
+df_N = utils.clean_up_hmm(df_N, 'N')
 
-# Concat into one table
-# first make sure all the queries are represented and sorted
-assert set(df_C.qname_C == df_N.qname_N) == {True}
+# Concat all 3 domain tables into one
+assert set(df_C.qname_C == df_N.qname_N) == {True} # ensure all queries are represented and sorted
 assert set(df_C.qname_C == df_M.qname_M) == {True}
 
 # drop duplicated columns
 df_M = df_M.drop(['qname_M', 'qlen_M'], axis=1)
 df_N = df_N.drop(['qname_N', 'qlen_N'], axis=1)
-frames = [df_C, df_M, df_N]
-master = pd.concat(frames, ignore_index=True, axis=1)
-master.columns = list(df_C.columns) + list(df_M.columns) + list(df_N.columns)
-print master.shape
-
-# add label column
-master['label'] = 0  # set default value
-master.loc[(master['qname_C'].isin(valids)), 'label'] = 1  # set to 1 for valids
-print master.shape
-
-# select features
-array = master.values
-X = array[:, 1:41]
-Y = list(array[:, 41])
-feature_names = list(master.columns[1:42])
-hits = utils.select_features(X, Y, 10, feature_names)
-# Select K Best selected features: ['qlen_C', 'domain-score_C', 'domain-score_M', 'hf_M', 'domain-score_N', 'hf_N']
-# RFE selected features: ['af_C', 'ef_C', 'af_M', 'ef_M', 'af_N', 'ef_N']
-# Extra Trees Classifier selected features: ['reliability_M', 'reliability_C', 'one_of_each', 'domain-score_M',
-# 'score_N', 'hf_M']
-
-# we retain score_N, score_M, score_C, hf_N, hf_M, hf_C
-keep = ['score_N', 'score_M', 'score_C', 'hf_N', 'hf_M', 'hf_C']
-master = master[['qname_C'] + keep]
+df_endo = pd.concat([df_C, df_M, df_N], ignore_index=True, axis=1)
+df_endo.columns = list(df_C.columns) + list(df_M.columns) + list(df_N.columns)
+print df_endo.shape
 
 
-### Physicochemical features homology using pydpi
+## Collect physicochemical features homology -- pydpi ##
 annotation_csv = './physicochem_annot.csv'
-# go through fasta and look at all pydpi sats, write annotation table
+# write annotation table of features for each protein in ts
 with open(annotation_csv, 'w') as f:
     for record in SeqIO.parse(query, "fasta"):
         protein = PyPro()
         protein.ReadProteinSequence(str(record.seq))
         desc = protein.GetCTD()
+        moran = protein.GetMoranAuto()
         label = str(record.description).strip().split(':')[1]
         id = str(record.id)
-        f.write(id + ',' + ','.join([str(i) for i in desc.values()]) + ',' + label + '\n')
+        row = [id, label] + [str(i) for i in desc.values()] + [str(i) for i in moran.values()]
+        f.write(','.join(row) + '\n')
 
-desc_header = desc.keys()
-df_desc = pd.read_table(annotation_csv, header=0, sep=',')
-df_desc.columns = ['id'] + desc_header + ['label']
+df_desc = pd.read_table(annotation_csv, header=None, sep=',')
+header = desc.keys() + moran.keys()
+df_desc.columns = ['id', 'label'] + header
 
 
-## Build master df to select features on
-print ts.shape
+## Build the master df with all three sets of data ##
 print df_desc.shape
 print df_endo.shape
 print df_blast.shape
 
-df_blast_full = df_blast.sort_values(by='qseqid')
-df_ctd_full = df_desc.sort_values(by='id')
-df_hmm_full = df_endo.sort_values(by='qname')
-ts = ts.sort_values(by='id')
+# Remove missing values
+prots_in_endo_df = list(df_endo['qname_C'])
+df_descf = df_desc[df_desc['id'].isin(prots_in_endo_df)]
+df_blastf = df_blast[df_blast['qseqid'].isin(prots_in_endo_df)]
+print df_descf.shape
+print df_endo.shape
+print df_blastf.shape
 
-t = ts.drop(['seq'], axis=1)
-b = df_blast_full.drop(['qseqid', 'label'], axis=1)
-c = df_ctd_full.drop(['label', 'id'], axis=1)
-h = df_hmm_full.drop(['qname', 'label'], axis=1)
+# make protein names are sorted and matching
+df_descf = df_descf.sort_values(by='id')
+df_blastf= df_blastf.sort_values(by='qseqid')
+df_endo = df_endo.sort_values(by='qname_C')
+assert set(df_descf['id'] == df_blastf['qseqid']) == {True}
+assert set(df_descf['id'] == df_endo['qname_C']) == {True}
 
-frames = [t, b, c, h]
-master = pd.concat(frames, ignore_index=True, axis=1)
-master.columns = list(t.columns) + list(b.columns) + list(c.columns) + list(h.columns)
+# drop redundant cols and merge
+df_endo = df_endo.drop(['qname_C'], axis=1)
+df_blastf = df_blastf.drop(['qseqid'], axis=1)
+dfs = [df_descf, df_blastf, df_endo]
+for df in dfs:
+    df.reset_index(drop=True, inplace= True)
+master = pd.concat(dfs, axis=1, ignore_index=True)
+master.columns = list(df_descf.columns) + list(df_blastf.columns) + list(df_endo.columns)
 print master.shape
+print master.columns
+
+
+### Feature Selection ###
+array = master.values
+X = array[:,2:]
+Y = list(array[:,1])  # labels
+feature_names = list(master.columns[2:])
+hits = utils.select_features(X, Y, 40, feature_names)
+top_hits = list({k: v for k, v in hits.iteritems() if v > 1})  # use features flagged by two or more methods
+print "Found {} selected features: {}".format(len(top_hits), top_hits)
+
+# filter master
+masterf = master[['id', 'label'] + top_hits]
+
+# plot the data
+matches = masterf[masterf['label'] == 1]  # valid prots
+non_matches = masterf[masterf['label'] == 0]  # invalid prots
+fig, axes = plt.subplots(6, 4)
+for ax, val in zip(axes.flatten(), masterf.columns[2:]):
+    ax.hist(matches[val].values, alpha=0.5)
+    ax.hist(non_matches[val].values, alpha=0.5)
+    ax.set_title(val)
+fig.set_tight_layout(True)
+
+# PCA
+X = masterf.ix[:,2:].values
+y = masterf['label']
+pca = PCA(n_components=2)
+X_r = pca.fit(X).transform(X)
+print 'Pct variance explained by top 2 components: {}'.format(str(pca.explained_variance_ratio_))
+plt.figure()
+for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
+    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+plt.legend(loc='best', shadow=False, scatterpoints=1)
 
 
 
+### Model seletion ###
 
-# Feature Extraction with Univariate Statistical Tests (Chi-squared for classification)
-df_desc.shape
-array = df_desc.values
-X = array[:,1:148]
-Y = list(array[:,148])
-
-# feature extraction
-test = SelectKBest(score_func=chi2, k=5)
-fit = test.fit(X, Y)
-# summarize scores
-np.set_printoptions(precision=3)
-print(fit.scores_)
-features = fit.transform(X)
-# summarize selected features
-print(features[0:5,:])
-
-feature_names = list(df_desc.columns[1:148])
-mask = test.get_support() #list of booleans
-new_features = [] # The list of your K best features
-
-for bool, feature in zip(mask, feature_names):
-    if bool:
-        new_features.append(feature)
-print new_features
+## Create Validation Dataset
+labels = masterf['label']
+features = masterf.ix[:, 2:].values
+X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(features, labels, test_size=0.3)
 
 
-# Feature Extraction with RFE
-# feature extraction
-model = LogisticRegression()
-rfe = RFE(model, 3)
-fit = rfe.fit(X, Y)
-print("Num Features: %d") % fit.n_features_
-print("Selected Features: %s") % fit.support_
-print("Feature Ranking: %s") % fit.ranking_
-
-# Feature Importance with Extra Trees Classifier
-# feature extraction
-model = ExtraTreesClassifier()
-model.fit(X, Y)
-print(model.feature_importances_)
-
-
-
-
-
-
-## Make training/validation datasets
-label_names = ['0', '1']
-labels = master['label']
-feature_names = master.columns[2:]
-features = master.ix[:,2:].values
-
-validation_size = 0.20
-seed = 7
-X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(features, labels, test_size=validation_size,
-                                                                                random_state=seed)
-seed = 7
-scoring = 'accuracy'
-
-# Spot Check Algorithms
+## Try out multiple models
 models = []
-#models.append(('LR', LogisticRegression()))
-#models.append(('LDA', LinearDiscriminantAnalysis()))
-models.append(('KNN', KNeighborsClassifier()))
-#models.append(('CART', DecisionTreeClassifier()))
-#models.append(('NB', GaussianNB()))
-#models.append(('SVM', SVC()))
+models.append(('LR', LogisticRegression()))  # linear
+models.append(('LinearSVC', LinearSVC())) # linear
+models.append(('KNN', KNeighborsClassifier()))  # non-linear
+models.append(('NB', GaussianNB()))  # non-linear
+models.append(('SVM', SVC()))  # non-linear
 
-# eval
-results = []
-names = []
-for name, model in models:
-    kfold = model_selection.KFold(n_splits=10, random_state=seed)
-    cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
-    results.append(cv_results)
-    names.append(name)
-    print "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+## Use 10 fold cross validation to estimate accuracy of each model tested
+seed = 7  # using same random seed to make results comparable
+scoring = 'accuracy'  # ratio correct predictions: total predictions * 100
 
 # Compare Algorithms
+results = []
+for name, model in models:
+    kfold = model_selection.KFold(n_splits=10, random_state=seed)
+    result = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
+    results.append(result)
+    print '{}: {}, ({})'.format(name, result.mean(), result.std())
+
+# plot results
 fig = plt.figure()
 fig.suptitle('Algorithm Comparison')
+plt.ylim([0.8, 1.001])
 ax = fig.add_subplot(111)
 plt.boxplot(results)
-ax.set_xticklabels(names)
+ax.set_xticklabels(['LR', 'LinearSVC', "KNN", 'NB', 'SVM'])
 plt.show()
 
+
+### Make predictions
+#The KNN algorithm was the most accurate model that we tested. Now we want to get an idea of the accuracy of the
+# model on our validation set.
+#This will give us an independent final check on the accuracy of the best model. It is valuable to keep a validation
+# set just in case you made a slip during training, such as overfitting to the training set or a data leak. Both will
+# result in an overly optimistic result.
+#We can run the KNN model directly on the validation set and summarize the results as a final accuracy score, a
+# confusion matrix and a classification report.
 
 # Make predictions on validation dataset
 knn = KNeighborsClassifier()
 knn.fit(X_train, Y_train)
 predictions = knn.predict(X_validation)
-print(accuracy_score(Y_validation, predictions))
-print(confusion_matrix(Y_validation, predictions))
-print(classification_report(Y_validation, predictions))
+print accuracy_score(Y_validation, predictions)
+print confusion_matrix(Y_validation, predictions)
+print classification_report(Y_validation, predictions)
 
 
+svc = LogisticRegression()
+svc.fit(X_train, Y_train)
+predictions = svc.predict(X_validation)
+print accuracy_score(Y_validation, predictions)
+print confusion_matrix(Y_validation, predictions)
+print classification_report(Y_validation, predictions)
+
+# We can see that the accuracy is 0.9 or 90%. The confusion matrix provides an indication of the three errors made.
+# Finally, the classification report provides a breakdown of each class by precision, recall, f1-score and support
+# showing excellent results (granted the validation dataset was small).

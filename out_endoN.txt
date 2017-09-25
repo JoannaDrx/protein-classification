@@ -548,6 +548,10 @@ Endotoxin_C          PF03944.13   143 5c84b528a56987b1a7ccf560ae4ecaee -        
 Endotoxin_C          PF03944.13   143 5c84b528a56987b1a7ccf560ae4ecaee -           1214   7.2e-37  113.1   0.2   3   4      0.31      0.31   -2.4   0.2    48    74   807   833   795   841 0.82 delta endotoxin
 Endotoxin_C          PF03944.13   143 5c84b528a56987b1a7ccf560ae4ecaee -           1214   7.2e-37  113.1   0.2   4   4    0.0037    0.0037    3.8   3.9    30   140  1105  1210  1081  1211 0.71 delta endotoxin
 Endotoxin_C          PF03944.13   143 b4b5c26ce99f3f9bd164c99648506a8c -            666   5.5e-29   87.5   0.2   1   1     2e-28     2e-28   85.7   0.2     1   143   512   641   512   641 0.85 delta endotoxin
+Endotoxin_C          PF03944.13   143 51ea8f7b07f84b0ad8bf977549218c4f -            381   1.1e-50  157.9   1.4   1   1   2.2e-50   2.2e-50  156.9   1.4     1   141   246   381   246   381 0.97 delta endotoxin
+Endotoxin_C          PF03944.13   143 9109e47216c07024af5cf5b250a86dac -           1144   1.2e-44  138.4   6.1   1   3      0.53      0.53   -3.2   0.1    59    85   376   401   367   407 0.66 delta endotoxin
+Endotoxin_C          PF03944.13   143 9109e47216c07024af5cf5b250a86dac -           1144   1.2e-44  138.4   6.1   2   3   5.9e-44   5.9e-44  136.1   0.7     1   143   507   644   507   644 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 9109e47216c07024af5cf5b250a86dac -           1144   1.2e-44  138.4   6.1   3   3    0.0024    0.0024    4.4   0.0    98   140  1099  1140  1021  1143 0.63 delta endotoxin
 #
 # Program:         hmmscan
 # Version:         3.1b2 (February 2015)
@@ -556,5 +560,5 @@ Endotoxin_C          PF03944.13   143 b4b5c26ce99f3f9bd164c99648506a8c -        
 # Target file:     ./endotoxins-hmm/Endotoxin_C.hmm
 # Option settings: hmmscan --domtblout out_endoN.txt --noali --domE 1 --cpu 8 ./endotoxins-hmm/Endotoxin_C.hmm training_seqs_all.fasta 
 # Current dir:     /Users/joannadreux/PycharmProjects/protein-classification
-# Date:            Sat Sep 23 13:47:57 2017
+# Date:            Sun Sep 24 18:23:45 2017
 # [ok]
