@@ -25,13 +25,13 @@ from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 
 # write fns for data collection
-def collect_blast_data(all_fasta, valid_fasta, out):
+def collect_blast_data(query, subject, out):
     """" Runs the BLASTp job
         Parses the output
         Imputes missing values"""
 
     # run the BLASTp job
-    blastp_cline = NcbiblastpCommandline(query=all_fasta, subject=valid_fasta, evalue=1, outfmt=6, out=out)
+    blastp_cline = NcbiblastpCommandline(query=query, subject=subject, evalue=1, outfmt=6, out=out)
     stdout, stderr = blastp_cline()
 
     # read & filter the blast results
@@ -89,10 +89,10 @@ def collect_hmm_data(pfam_db, subject, suffix, id_list, out):
 
     return df
 
-def collect_pydpi_data():
-    # write annotation table of features for each protein in ts
-    with open(annotation_csv, 'w') as f:
-        for record in SeqIO.parse(all_fasta, "fasta"):
+def collect_pydpi_data(fasta, out):
+    """Collect protein stats"""
+    with open(out, 'w') as f:
+        for record in SeqIO.parse(fasta, "fasta"):
             protein = PyPro()
             protein.ReadProteinSequence(str(record.seq))
             desc = protein.GetCTD()
@@ -102,7 +102,7 @@ def collect_pydpi_data():
             row = [id, label, len_p] + [str(i) for i in desc.values()]
             f.write(','.join(row) + '\n')
 
-    df_desc = pd.read_table(annotation_csv, header=None, sep=',')
+    df_desc = pd.read_table(out, header=None, sep=',')
     header = desc.keys()
     df_desc.columns = ['id', 'label', 'seq_length'] + header
 
@@ -140,14 +140,7 @@ for sequences in all_prots:
 
 ## Collect BLASTp data - sequence homology ##
 out_blastp = 'blastp_out_training.tab'
-df_blast =  collect_blast_data(out_blastp)
-
-    df_blast_master = run_parse_blast(all_fasta, valid_fasta, 1, out_blastp)
-    # tidy the table
-    df_blast = df_blast_master[df_blast_master['pident'] != 100.0]  # remove identical hits
-    df_blast = df_blast.drop_duplicates(subset=['qseqid'], keep='first')  # only keep top hit per query
-    df_blast = impute_values_blast(id_list, df_blast)
-    print df_blast.shape
+df_blast =  collect_blast_data(all_fasta, valid_fasta, out_blastp)
 
 
 ## Collect domain similarity data ##
@@ -162,6 +155,7 @@ print set(df_hmm.groupby('qname')['acc'].count())  # and they all have all 3
 
 # We run the analysis again but against each domain of interest individually
 # use .hmm files obtained from - http://pfam.xfam.org/
+df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', all_fasta, 'C', 'out_endoC_training.txt')
 df_C = run_parse_hmmer(1, 'out_endoC_training.txt', './endotoxins-hmm/Endotoxin_C.hmm', all_fasta, 'C')
 df_M = run_parse_hmmer(1, 'out_endoM_training.txt', './endotoxins-hmm/Endotoxin_M.hmm', all_fasta, 'M')
 df_N = run_parse_hmmer(1, 'out_endoN_training.txt', './endotoxins-hmm/Endotoxin_N.hmm', all_fasta, 'N')
