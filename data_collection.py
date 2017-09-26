@@ -11,7 +11,7 @@ from Bio.Blast.Applications import NcbiblastpCommandline
 
 
 # cwd
-os.chdir('/Users/jdreux/PycharmProjects/protein-classification/')
+os.chdir('/Users/joannadreux/PycharmProjects/protein-classification/')
 
 ### Collect data from the training set  ###
 # Load the training set data
@@ -126,7 +126,7 @@ print 'BLASTp table: {}'.format(df_blast.columns)
 # first, run valid prots against Pfam-A.hmm to find domains of interest
 df_hmm = collect_hmm_data('/Users/jdreux/Desktop/hmm/Pfam-A.hmm', 1e-5, valid_fasta, '', id_list, 'hmm/out_hmmer.txt')
 
-print len(set(df_hmm['qname'])) # all valid proteins are represented
+print len(set(df_hmm['qname']))  # all valid proteins are represented
 # 44
 
 print set(df_hmm['acc'])  # only 3 domains are aligned to by the valid proteins
