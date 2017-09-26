@@ -13,7 +13,6 @@ from sklearn.feature_selection import SelectFromModel
 import matplotlib.pyplot as plt
 import pickle
 
-
 # Import the pickled master dfs
 training_df = pickle.load(open('training_set.pkl', "rb"))
 test_df = pickle.load(open('putative_set.pkl', "rb"))
@@ -41,7 +40,7 @@ def feature_selection(X, Y, feature_names, num):
     Selects num features from X and returns the selected column names"""
 
     # logistic regression
-    fit = RFE(LogisticRegression(), num).fit(X,Y)
+    fit = RFE(LinearSVC(), num).fit(X,Y)
     k = []
     for bool, ft in zip(fit.support_, feature_names):
         if bool:
@@ -60,7 +59,7 @@ def feature_selection(X, Y, feature_names, num):
     return list(set(k+n))
 
 
-sel_features = feature_selection(X, Y, feature_names, 200)  # select for 200 features
+sel_features = feature_selection(X, Y, feature_names, 20)  # select for 200 features
 
 # filter dfs on selected features
 training = training_df[['id', 'label'] + sel_features]
@@ -106,29 +105,22 @@ def compare_models(X_train, X_validation, Y_validation, Y_train):
 xt, xv, yt, yv = validation_set(training, 0)
 compare_models(xt, xv, yv, yt)
 
-
 ### Make predictions and score ###
 def run_models(X_train, Y_train, test_array):
-
-    # lr
-    lr = LogisticRegression()
-    lr.fit(X_train, Y_train)
-    p1 = lr.predict(test_array)
-    print 'LR: {}'.format(score(p1))
 
     # knn
     knn = KNeighborsClassifier()
     knn.fit(X_train, Y_train)
-    p2 = knn.predict(test_array)
-    print 'KNN: {}'.format(score(p2))
+    p1 = knn.predict(test_array)
+    print 'KNN: {}'.format(score(p1))
 
     # lvc
     lvc = LinearSVC()
     lvc.fit(X_train, Y_train)
-    p3 = lvc.predict(test_array)
-    print 'LinearSVC: {}'.format(score(p3))
+    p2 = lvc.predict(test_array)
+    print 'LinearSVC: {}'.format(score(p2))
 
-    return p1, p2, p3
+    return p1, p2
 
 
 def score(predictions):
@@ -150,14 +142,39 @@ def score(predictions):
     return total
 
 
-p1, p2, p3 = run_models(training[sel_features], training['label'], test[sel_features])
+p1, p2 = run_models(training[sel_features], training['label'], test[sel_features])
 
-final = test
-final['label'] = p3
 
-# plot the data
-X = final.ix[:,1:-1].values
-y = final['label']
+## plot the putative set predictions on PCA
+df_p1 = test.assign(label=p1)
+df_p2 = test.assign(label=p2)
+
+for df in [df_p1, df_p2]:
+    X = df.ix[:,1:-1].values
+    y = df['label']
+    pca = PCA(n_components=2)
+    X_r = pca.fit(X).transform(X)
+    plt.figure()
+    for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
+        plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+    plt.legend(loc='best', shadow=False, scatterpoints=1)
+
+
+## peek at ideal results
+pkl_file = 'protein_nomination_value.pkl'
+money = pickle.load(open(pkl_file, "rb"))
+
+best = sorted(money.keys())
+l = []
+for i in test['id']:
+    if i in best:
+        l.append(1)
+    else:
+        l.append(0)
+
+t= test.assign(label=l)
+X = t.ix[:,1:-1].values
+y = t['label']
 pca = PCA(n_components=2)
 X_r = pca.fit(X).transform(X)
 plt.figure()

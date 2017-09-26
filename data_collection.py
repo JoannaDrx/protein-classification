@@ -8,6 +8,8 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 from pydpi.pypro import PyPro
 from Bio.Blast.Applications import NcbiblastpCommandline
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 
 # cwd
@@ -118,6 +120,18 @@ def collect_hmm_data(pfam_db, threshold, subject, suffix, id_list, out):
 df_blast =  collect_blast_data(all_fasta, valid_fasta, id_list, 'blastp_out_training.tab')
 print 'BLASTp table: {}'.format(df_blast.columns)
 
+
+# plot the two distributions
+valid_prots = list(ts[ts['label']==0]['id'])
+matches = df_blast[df_blast['qseqid'].isin(valid_prots)]  # valid prot alignments, all 44
+non_matches = df_blast[~df_blast['qseqid'].isin(valid_prots)]  # invalid prot alignments
+fig, axes = plt.subplots(4, 1)
+for ax, val in zip(axes.flatten(), df_blast.columns[1:]):
+    ax.hist(matches[val].values, alpha=0.5)
+    ax.hist(non_matches[val].values, alpha=0.5)
+    ax.set_title(val)
+fig.set_tight_layout(True)
+
 # Collected BLAST df: (264, 5)
 # BLASTp table: Index([u'qseqid', u'pident', u'len', u'evalue', u'bitscore'], dtype='object')
 
@@ -163,14 +177,31 @@ print 'Endotoxin domains table ({}): {}'.format(df_endo.shape, df_endo.columns)
        # dtype='object')
 
 
+# plot the data
+df_endo = df_endo.sort_values(by='qname_C')
+ts= ts.sort_values(by='id')
+assert set(ts['id'] == df_endo['qname_C']) == {True}
+
+df_p = df_endo.assign(e=pd.Series(ts['label']).values)
+fig, axes = plt.subplots(4, 1)
+X = df_p.ix[:,1:].values
+y = df_p['e']
+pca = PCA(n_components=2)
+X_r = pca.fit(X).transform(X)
+plt.figure()
+for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
+    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+plt.title('PCA of hmmscan df')
+
 # Collect physicochemical features homology -- pydpi ##
 print 'Collecting physicochemical stats per protein...'
 with open('./physicochem_annot_training.csv', 'w') as f:
     for record in SeqIO.parse(all_fasta, "fasta"):
         protein = PyPro()
         protein.ReadProteinSequence(str(record.seq))
-        desc = protein.GetMoreauBrotoAuto()
-        desc2 = protein.GetAAComp()
+        desc = protein.GetGearyAuto()
+        desc2 = protein.GetDPComp()
         z = desc.copy()
         z.update(desc2)
         len_p = str(len(record.seq))
@@ -183,6 +214,19 @@ df_desc = pd.read_table('./physicochem_annot_training.csv', header=None, sep=','
 header = z.keys()
 df_desc.columns = ['id', 'label', 'seq_length'] + header
 print 'Pydpi table: {}'.format(df_desc.columns)
+
+
+# plot
+X = df_desc.ix[:,2:].values
+y = df_desc['label']
+pca = PCA(n_components=2)
+X_r = pca.fit(X).transform(X)
+plt.figure()
+for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
+    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+plt.title('PCA of pydpi data - Geary Autocorrelation and DiPeptide comp')
+
 
 
 # Build the master df with all three sets of data ##
@@ -206,6 +250,10 @@ print 'Built master df ({}): {}'.format(master.shape, master.columns)
 master.to_pickle('training_set.pkl')
 
 
+
+
+
+
 ### Collect data for the putative_10000 fasta ###
 query = 'sg_putative_10000.faa'
 id_list_test = []
@@ -218,9 +266,9 @@ df_bl =  collect_blast_data(query, valid_fasta, id_list_test, 'blastp_out_test.t
 print 'BLASTp table: {}'.format(df_bl.columns)
 
 # Collect domain similarity data
-df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-3, query, 'C', id_list_test, 'hmm/out_endoC_training.txt')
-df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-3, query, 'M', id_list_test, 'hmm/out_endoM_training.txt')
-df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-3, query, 'N', id_list_test, 'hmm/out_endoN_training.txt')
+df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-5, query, 'C', id_list_test, 'hmm/out_endoC_training.txt')
+df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-5, query, 'M', id_list_test, 'hmm/out_endoM_training.txt')
+df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-5, query, 'N', id_list_test, 'hmm/out_endoN_training.txt')
 
 # Concat all 3 domain tables into one
 assert df_C.shape == df_M.shape == df_N.shape
@@ -241,8 +289,8 @@ with open('./physicochem_annot_test.csv', 'w') as f:
     for record in SeqIO.parse(query, "fasta"):
         protein = PyPro()
         protein.ReadProteinSequence(str(record.seq))
-        desc = protein.GetMoreauBrotoAuto()
-        desc2 = protein.GetAAComp()
+        desc = protein.GetGearyAuto()
+        desc2 = protein.GetDPComp()
         z = desc.copy()
         z.update(desc2)
         len_p = str(len(record.seq))
@@ -274,16 +322,5 @@ master_test = pd.concat(dfs, axis=1, ignore_index=True)
 master_test.columns = list(df_de.columns) + list(df_bl.columns) + list(df_en.columns)
 
 print 'Built master df ({}): {}'.format(master_test.shape, master_test.columns)
-# Built master df ((10000, 287)): Index([u'id', u'seq_length', u'MoreauBrotoAuto_ResidueASA27',
-#       u'MoreauBrotoAuto_ResidueASA26', u'MoreauBrotoAuto_ResidueASA25',
-#       u'MoreauBrotoAuto_ResidueASA24', u'MoreauBrotoAuto_ResidueASA23',
-#       u'MoreauBrotoAuto_ResidueASA22', u'MoreauBrotoAuto_ResidueASA21',
-#       u'MoreauBrotoAuto_ResidueASA20',
-#       ...
-#       u'domain-score_M', u'reliability_M', u'count_M', u'e-value_N',
-#       u'score_N', u'c-evalue_N', u'i-evalue_N', u'domain-score_N',
-#       u'reliability_N', u'count_N'],
-#      dtype='object', length=287)
-
-
+# Built master df ((10000, 667)): Index([u..])
 master_test.to_pickle('putative_set.pkl')
