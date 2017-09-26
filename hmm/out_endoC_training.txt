@@ -10,15 +10,18 @@ Endotoxin_C          PF03944.13   143 36f05cba1096c868e097aa3c13ac9495 -        
 Endotoxin_C          PF03944.13   143 d8ac33626c0b12a42dc8b440116368ae -           1176     3e-41  127.3   0.8   1   1     8e-41     8e-41  125.9   0.8     1   143   467   603   467   603 0.92 delta endotoxin
 Endotoxin_C          PF03944.13   143 9666a7295e24f5b46f1436316e613e2b -           1177   2.5e-38  117.8   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 727aab54da9eb064e7df635154692bfa -           1155   3.4e-48  149.8   2.0   1   1   3.4e-48   3.4e-48  149.8   2.0     1   142   471   607   471   608 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 4061b31fcb217f3002cd7d73730f7be0 -           1154   1.2e-29   89.6  10.3   1   1   2.1e-29   2.1e-29   88.9   0.4     1   143   513   660   513   660 0.85 delta endotoxin
+Endotoxin_C          PF03944.13   143 4061b31fcb217f3002cd7d73730f7be0 -           1154   1.2e-29   89.6  10.3   1   2   2.1e-29   2.1e-29   88.9   0.4     1   143   513   660   513   660 0.85 delta endotoxin
+Endotoxin_C          PF03944.13   143 4061b31fcb217f3002cd7d73730f7be0 -           1154   1.2e-29   89.6  10.3   2   2   0.00084   0.00084    5.9   0.1    69   139  1088  1149  1045  1152 0.69 delta endotoxin
 Endotoxin_C          PF03944.13   143 9d46d50dbbe84d380ed4e16eef715b6b -            626   1.4e-16   47.4  10.1   1   1   1.5e-16   1.5e-16   47.2   6.8     2   143   488   621   487   621 0.88 delta endotoxin
 Endotoxin_C          PF03944.13   143 3e451fb33798307aa8f042575a0c600c -           1166   3.8e-51  159.4   1.7   1   1   3.8e-51   3.8e-51  159.4   1.7     1   142   456   592   456   593 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 41fc7428ebb3163401311b473e0b39e9 -            601     7e-48  148.8   2.8   1   1   1.3e-47   1.3e-47  147.9   2.8     1   143   464   601   464   601 0.97 delta endotoxin
 Endotoxin_C          PF03944.13   143 e2e269417d350ff8c40ae9d2f40cb3fc -            633   7.4e-17   48.2   8.6   1   1   7.4e-17   7.4e-17   48.2   8.6     2   143   495   628   494   628 0.85 delta endotoxin
-Endotoxin_C          PF03944.13   143 d68755b9a081029021533f36302dc1a1 -           1150   4.6e-45  139.7  13.3   1   1   2.3e-44   2.3e-44  137.4   0.4     1   143   515   651   515   651 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 d68755b9a081029021533f36302dc1a1 -           1150   4.6e-45  139.7  13.3   1   2   2.3e-44   2.3e-44  137.4   0.4     1   143   515   651   515   651 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 d68755b9a081029021533f36302dc1a1 -           1150   4.6e-45  139.7  13.3   2   2   4.8e-05   4.8e-05    9.9   0.2    51   140  1063  1146  1005  1149 0.66 delta endotoxin
 Endotoxin_C          PF03944.13   143 641e9f8d7f5c0a70e7b306f158ad581d -           1177   9.2e-39  119.2   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 7d552482ca57d9a814641b60445d3816 -            623   9.5e-16   44.6   6.1   1   1   9.5e-16   9.5e-16   44.6   6.1     2   143   486   618   485   618 0.83 delta endotoxin
-Endotoxin_C          PF03944.13   143 dca7dc49dace72ada839baf5c4be8900 -           1198   5.1e-36  110.4  12.4   1   1     3e-34     3e-34  104.6   0.0     1   143   511   649   511   649 0.88 delta endotoxin
+Endotoxin_C          PF03944.13   143 dca7dc49dace72ada839baf5c4be8900 -           1198   5.1e-36  110.4  12.4   1   2     3e-34     3e-34  104.6   0.0     1   143   511   649   511   649 0.88 delta endotoxin
+Endotoxin_C          PF03944.13   143 dca7dc49dace72ada839baf5c4be8900 -           1198   5.1e-36  110.4  12.4   2   2    0.0006    0.0006    6.4   0.4    12    77   742   815   737   879 0.80 delta endotoxin
 Endotoxin_C          PF03944.13   143 7ca98c83894e04b14669875b54464c2e -           1183   7.1e-47  145.5   0.8   1   1   7.1e-47   7.1e-47  145.5   0.8     1   142   470   606   470   607 0.95 delta endotoxin
 Endotoxin_C          PF03944.13   143 ac51c3e5cfffd5c4eb0bf363128083d0 -            625   9.2e-13   35.0   5.5   1   1   9.2e-13   9.2e-13   35.0   5.5     2   138   486   613   485   615 0.82 delta endotoxin
 Endotoxin_C          PF03944.13   143 8bbcf41aaa7c7669ac7a937ae94ee4c2 -           1180   3.5e-48  149.8   2.0   1   1   3.5e-48   3.5e-48  149.8   2.0     1   142   470   606   470   607 0.96 delta endotoxin
@@ -42,7 +45,8 @@ Endotoxin_C          PF03944.13   143 3ea1b4dc4865f1354d36a1e755831e6b -        
 Endotoxin_C          PF03944.13   143 01fdc089caa82e5cb8abaf48c0bea1c5 -           1156   5.5e-41  126.5   0.6   1   1   1.9e-38   1.9e-38  118.2   0.2     1   143   520   656   520   656 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 9fb8c241943cbbac33ca90b6284fde9d -           1176   3.5e-48  149.8   2.0   1   1   3.5e-48   3.5e-48  149.8   2.0     1   142   470   606   470   607 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 721f89dd8e005ae3d38b6e3f4d0f3a05 -           1155   3.4e-48  149.8   2.0   1   1   3.4e-48   3.4e-48  149.8   2.0     1   142   471   607   471   608 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 54bfe9b8b142e2056b275d44faab4f95 -           1157   1.1e-45  141.7   3.3   1   1     8e-43     8e-43  132.4   0.3     1   143   515   658   515   658 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 54bfe9b8b142e2056b275d44faab4f95 -           1157   1.1e-45  141.7   3.3   1   2     8e-43     8e-43  132.4   0.3     1   143   515   658   515   658 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 54bfe9b8b142e2056b275d44faab4f95 -           1157   1.1e-45  141.7   3.3   2   2   0.00012   0.00012    8.6   0.0   100   140  1120  1153  1059  1156 0.65 delta endotoxin
 Endotoxin_C          PF03944.13   143 5feb5429055a25f5ad67bc0c50417e53 -           1189   9.1e-40  122.5   0.3   1   1   2.2e-39   2.2e-39  121.3   0.1     1   141   467   614   467   616 0.92 delta endotoxin
 Endotoxin_C          PF03944.13   143 1de405303bb817c9590f13ad41e7ac42 -           1160   8.3e-39  119.4   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 ff2cabe1e373233b5ed4255e3ce42858 -            754   2.2e-13   37.0   1.3   1   1   2.2e-13   2.2e-13   37.0   1.3     3   142   621   753   619   754 0.80 delta endotoxin
@@ -59,7 +63,8 @@ Endotoxin_C          PF03944.13   143 5b1bbbd545a88c4a80be316e7db7bcf4 -        
 Endotoxin_C          PF03944.13   143 714908330ad5b92a5e44d38e4841f1b8 -            869   1.3e-23   70.1   0.9   1   1   1.3e-23   1.3e-23   70.1   0.9    17   143   507   631   497   631 0.87 delta endotoxin
 Endotoxin_C          PF03944.13   143 2285b5cb708c3c39a4d0261538773da3 -           1171   8.8e-42  129.0   0.1   1   1     3e-41     3e-41  127.3   0.1     1   140   464   598   464   601 0.91 delta endotoxin
 Endotoxin_C          PF03944.13   143 180fec69ecba06f67fa251db47f76a2f -           1177   2.5e-38  117.8   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
-Endotoxin_C          PF03944.13   143 19a68f720be5b07dddce29d0e0d3e2af -            931   8.2e-33  100.0   7.0   1   1   3.8e-31   3.8e-31   94.5   1.1     3   142   542   677   540   678 0.89 delta endotoxin
+Endotoxin_C          PF03944.13   143 19a68f720be5b07dddce29d0e0d3e2af -            931   8.2e-33  100.0   7.0   1   2   3.8e-31   3.8e-31   94.5   1.1     3   142   542   677   540   678 0.89 delta endotoxin
+Endotoxin_C          PF03944.13   143 19a68f720be5b07dddce29d0e0d3e2af -            931   8.2e-33  100.0   7.0   2   2   0.00021   0.00021    7.8   0.4    38   142   728   816   700   817 0.60 delta endotoxin
 Endotoxin_C          PF03944.13   143 c750dacc9548a48dcb6391dde09bcc29 -            623   9.5e-16   44.6   6.1   1   1   9.5e-16   9.5e-16   44.6   6.1     2   143   486   618   485   618 0.83 delta endotoxin
 Endotoxin_C          PF03944.13   143 9de67c5cb8699beddf4564d4408ed655 -           1178   2.5e-38  117.8   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   471   609   471   609 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 82a169882896c4afde23fbdd74361c12 -           1201     2e-41  127.9   2.1   1   1   7.5e-41   7.5e-41  126.0   2.1     1   143   477   613   477   613 0.93 delta endotoxin
@@ -72,7 +77,8 @@ Endotoxin_C          PF03944.13   143 ed823f977a91077cf7802e7a7653f171 -        
 Endotoxin_C          PF03944.13   143 2281b863b06e57da59b14f984c8fa17b -            613   1.6e-23   69.9   1.0   1   1   1.6e-23   1.6e-23   69.9   1.0     1   126   451   591   451   598 0.83 delta endotoxin
 Endotoxin_C          PF03944.13   143 203d60bf4bd0e4afbe42bb94d8700b84 -            723     2e-12   33.9   1.7   1   1     2e-12     2e-12   33.9   1.7     3   142   590   722   588   723 0.79 delta endotoxin
 Endotoxin_C          PF03944.13   143 54832c05ae270a4f4d63bb4ac132bd60 -            815   1.8e-14   40.5   0.8   1   1   1.8e-14   1.8e-14   40.5   0.8     1   142   538   674   538   675 0.87 delta endotoxin
-Endotoxin_C          PF03944.13   143 1005eb913e487e7dedd881bdb807b3d0 -           1156   1.8e-41  128.0   0.6   1   1   1.1e-37   1.1e-37  115.8   0.1     1   143   518   657   518   657 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 1005eb913e487e7dedd881bdb807b3d0 -           1156   1.8e-41  128.0   0.6   1   2   1.1e-37   1.1e-37  115.8   0.1     1   143   518   657   518   657 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 1005eb913e487e7dedd881bdb807b3d0 -           1156   1.8e-41  128.0   0.6   2   2   5.8e-05   5.8e-05    9.7   0.0    93   140  1114  1152  1051  1155 0.55 delta endotoxin
 Endotoxin_C          PF03944.13   143 50679f7705e9d5378c8c7f0f1f62c85b -           1154   3.4e-48  149.8   2.0   1   1   3.4e-48   3.4e-48  149.8   2.0     1   142   471   607   471   608 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 39c26912fe2ad1089b2538395ba70ad2 -            644   1.5e-43  134.8   1.0   1   1   1.5e-43   1.5e-43  134.8   1.0     1   143   509   644   509   644 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 286a705a25152180babfb76885ea876a -           1181   1.2e-48  151.3   1.7   1   1   3.7e-48   3.7e-48  149.7   1.7     1   142   471   607   471   608 0.96 delta endotoxin
@@ -110,11 +116,14 @@ Endotoxin_C          PF03944.13   143 229b06bc5fb1699651777a1131edb128 -        
 Endotoxin_C          PF03944.13   143 aabdef54511a348bef2af35abad9a033 -           1173   8.3e-48  148.6   2.4   1   1   9.8e-48   9.8e-48  148.3   0.9     1   142   457   594   457   595 0.95 delta endotoxin
 Endotoxin_C          PF03944.13   143 8c9814214bfb20e70ff0fa34e3174e59 -           1227   1.8e-41  128.0   2.1   1   1   7.7e-41   7.7e-41  126.0   2.1     1   143   503   639   503   639 0.93 delta endotoxin
 Endotoxin_C          PF03944.13   143 57fcf0b59b7d80422f3c6f43950c1d6a -           1174   3.6e-46  143.3   3.0   1   1     3e-45     3e-45  140.3   1.8     1   143   464   601   464   601 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 9459974ad10115c5016c2812784b89e9 -           1163   7.2e-38  116.3   3.5   1   1   1.8e-35   1.8e-35  108.6   0.1     1   143   525   664   525   664 0.95 delta endotoxin
+Endotoxin_C          PF03944.13   143 9459974ad10115c5016c2812784b89e9 -           1163   7.2e-38  116.3   3.5   1   2   1.8e-35   1.8e-35  108.6   0.1     1   143   525   664   525   664 0.95 delta endotoxin
+Endotoxin_C          PF03944.13   143 9459974ad10115c5016c2812784b89e9 -           1163   7.2e-38  116.3   3.5   2   2   0.00027   0.00027    7.5   0.1    51   140  1076  1159  1027  1161 0.67 delta endotoxin
 Endotoxin_C          PF03944.13   143 f1f0804c69c296539b9cfe5eaff062d1 -           1189   8.1e-40  122.7   0.1   1   1   2.1e-39   2.1e-39  121.4   0.1     1   141   467   614   467   616 0.91 delta endotoxin
 Endotoxin_C          PF03944.13   143 1f7a2007f386a6ed5080bcb381133897 -            609   6.4e-39  119.8   0.9   1   1   1.2e-38   1.2e-38  118.9   0.9     1   143   470   608   470   608 0.94 delta endotoxin
-Endotoxin_C          PF03944.13   143 39c9283208bd439181a185f4ef945fe0 -           1150   1.3e-44  138.3  14.2   1   1   2.8e-44   2.8e-44  137.1   0.4     1   143   515   651   515   651 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 70712a99402803fb31bb7ecefa801a30 -           1150   1.1e-44  138.4  10.2   1   1   1.5e-43   1.5e-43  134.8   0.2     1   143   515   651   515   651 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 39c9283208bd439181a185f4ef945fe0 -           1150   1.3e-44  138.3  14.2   1   2   2.8e-44   2.8e-44  137.1   0.4     1   143   515   651   515   651 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 39c9283208bd439181a185f4ef945fe0 -           1150   1.3e-44  138.3  14.2   2   2   4.8e-05   4.8e-05    9.9   0.2    51   140  1063  1146  1005  1149 0.66 delta endotoxin
+Endotoxin_C          PF03944.13   143 70712a99402803fb31bb7ecefa801a30 -           1150   1.1e-44  138.4  10.2   1   2   1.5e-43   1.5e-43  134.8   0.2     1   143   515   651   515   651 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 70712a99402803fb31bb7ecefa801a30 -           1150   1.1e-44  138.4  10.2   2   2   5.8e-05   5.8e-05    9.7   0.1    51   140  1063  1146  1006  1149 0.69 delta endotoxin
 Endotoxin_C          PF03944.13   143 3fac568c04899c6d5f90c1fd27e92fb7 -           1460   4.9e-37  113.7   0.1   1   1   2.6e-36   2.6e-36  111.3   0.1     1   142   536   673   536   674 0.86 delta endotoxin
 Endotoxin_C          PF03944.13   143 d6ca1aebb69d0ee8305c9aeacf17af59 -           1155   6.2e-48  149.0   2.0   1   1   1.7e-47   1.7e-47  147.6   2.0     1   142   471   607   471   608 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 d5babc66a06d2ee55be9aec74445ba83 -           1179     1e-23   70.5   2.8   1   1   1.5e-22   1.5e-22   66.7   0.1     1   142   491   632   491   633 0.88 delta endotoxin
@@ -163,7 +172,8 @@ Endotoxin_C          PF03944.13   143 127c4082991b04055f1c26207092bf6e -        
 Endotoxin_C          PF03944.13   143 902be17e4c4481b6dd39e96e083386f0 -            911   2.4e-45  140.6   1.2   1   1   4.5e-45   4.5e-45  139.7   1.2     1   142   468   604   468   605 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 41d6fc05c55107baf75ca7c44b376f58 -           1228   2.1e-41  127.8   2.1   1   1   7.8e-41   7.8e-41  126.0   2.1     1   143   504   640   504   640 0.93 delta endotoxin
 Endotoxin_C          PF03944.13   143 c8a63a94c9531a384262fb1296b38e1f -            703   4.6e-33  100.8   0.0   1   1     1e-32     1e-32   99.6   0.0     1   143   524   654   524   654 0.83 delta endotoxin
-Endotoxin_C          PF03944.13   143 09219b083365a5ea6cb254013d23b1db -           1154   2.4e-49  153.6  17.8   1   1   5.2e-49   5.2e-49  152.5   3.5     1   143   518   655   518   655 0.97 delta endotoxin
+Endotoxin_C          PF03944.13   143 09219b083365a5ea6cb254013d23b1db -           1154   2.4e-49  153.6  17.8   1   2   5.2e-49   5.2e-49  152.5   3.5     1   143   518   655   518   655 0.97 delta endotoxin
+Endotoxin_C          PF03944.13   143 09219b083365a5ea6cb254013d23b1db -           1154   2.4e-49  153.6  17.8   2   2   6.5e-05   6.5e-05    9.5   0.0   100   140  1117  1150  1062  1153 0.60 delta endotoxin
 Endotoxin_C          PF03944.13   143 4381f28071ea632ab8c1889539e35e12 -           1169   8.6e-49  151.8  10.0   1   1   1.1e-48   1.1e-48  151.4   2.4     1   143   533   670   533   670 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 2b66cd1173cfdc5d2f0fe77364387e36 -            646   5.8e-14   38.8   0.1   1   1     2e-13     2e-13   37.1   0.0    68   143     3    73     1    73 0.86 delta endotoxin
 Endotoxin_C          PF03944.13   143 142711ae534591fe08a96c95b1848123 -           1174   2.1e-51  160.2   6.5   1   1   2.2e-51   2.2e-51  160.2   2.3     1   142   464   599   464   600 0.96 delta endotoxin
@@ -200,8 +210,10 @@ Endotoxin_C          PF03944.13   143 0af76cc03c17a2cb8bf70d5d77b5dd60 -        
 Endotoxin_C          PF03944.13   143 cce864669620d60680eb70c79883848f -            633     1e-16   47.8   8.4   1   1   4.2e-16   4.2e-16   45.8   7.6     2   143   495   628   494   628 0.87 delta endotoxin
 Endotoxin_C          PF03944.13   143 e6217822536ba75d42ef743b1707dec5 -           1181   3.5e-48  149.8   2.0   1   1   3.5e-48   3.5e-48  149.8   2.0     1   142   471   607   471   608 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 0cb1b7df8410a38ab925cd7a5062e8b4 -           1170     9e-42  129.0   0.1   1   1     3e-41     3e-41  127.3   0.1     1   140   464   598   464   601 0.91 delta endotoxin
-Endotoxin_C          PF03944.13   143 208d0e1f52556d2ecfd0c39564ab8bdb -           1154   1.2e-29   89.6  10.3   1   1   2.1e-29   2.1e-29   88.9   0.4     1   143   513   660   513   660 0.85 delta endotoxin
-Endotoxin_C          PF03944.13   143 24d9807db0d63848528a3d85b8891739 -           1169   3.3e-53  166.1   5.2   1   1   3.6e-50   3.6e-50  156.2   2.9     1   143   531   668   531   668 0.97 delta endotoxin
+Endotoxin_C          PF03944.13   143 208d0e1f52556d2ecfd0c39564ab8bdb -           1154   1.2e-29   89.6  10.3   1   2   2.1e-29   2.1e-29   88.9   0.4     1   143   513   660   513   660 0.85 delta endotoxin
+Endotoxin_C          PF03944.13   143 208d0e1f52556d2ecfd0c39564ab8bdb -           1154   1.2e-29   89.6  10.3   2   2   0.00084   0.00084    5.9   0.1    69   139  1088  1149  1045  1152 0.69 delta endotoxin
+Endotoxin_C          PF03944.13   143 24d9807db0d63848528a3d85b8891739 -           1169   3.3e-53  166.1   5.2   1   2   3.6e-50   3.6e-50  156.2   2.9     1   143   531   668   531   668 0.97 delta endotoxin
+Endotoxin_C          PF03944.13   143 24d9807db0d63848528a3d85b8891739 -           1169   3.3e-53  166.1   5.2   2   2   0.00012   0.00012    8.6   0.0   100   140  1132  1165  1071  1168 0.65 delta endotoxin
 Endotoxin_C          PF03944.13   143 54aa19fb14693767e919d01f2e05da0c -            799     1e-37  115.9   0.2   1   1   2.2e-37   2.2e-37  114.8   0.2     1   143   520   652   520   652 0.88 delta endotoxin
 Endotoxin_C          PF03944.13   143 c83a82cfe7f20268e130e6e6c5fec6e1 -           1118   1.4e-46  144.6   2.2   1   1   2.6e-46   2.6e-46  143.7   2.2     1   142   469   605   469   606 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 76edc66c977de60f93c422dcdb6399b1 -            676     2e-26   79.2   0.0   1   1     2e-26     2e-26   79.2   0.0     1   143   505   637   505   637 0.85 delta endotoxin
@@ -209,13 +221,16 @@ Endotoxin_C          PF03944.13   143 657330026ba36b68a8f5425f916e8dc9 -        
 Endotoxin_C          PF03944.13   143 98dfd619d735aa845ffb573d130c7e66 -            633   8.3e-18   51.3   7.3   1   1   4.3e-17   4.3e-17   49.0   6.8     2   143   495   628   494   628 0.89 delta endotoxin
 Endotoxin_C          PF03944.13   143 c4a71cdb4212e89041bc151c70201d1c -           1168   8.1e-52  161.6   2.4   1   1   8.1e-52   8.1e-52  161.6   2.4     1   142   464   599   464   600 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 f4f97da1fe9d39f12a766cd103152c23 -           1176   3.5e-48  149.8   2.0   1   1   3.5e-48   3.5e-48  149.8   2.0     1   142   470   606   470   607 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 4867a8b47a8c324319a4c239e967bcfc -           1164   5.1e-41  126.6   2.2   1   1   8.2e-39   8.2e-39  119.4   0.5     1   143   526   665   526   665 0.93 delta endotoxin
+Endotoxin_C          PF03944.13   143 4867a8b47a8c324319a4c239e967bcfc -           1164   5.1e-41  126.6   2.2   1   2   8.2e-39   8.2e-39  119.4   0.5     1   143   526   665   526   665 0.93 delta endotoxin
+Endotoxin_C          PF03944.13   143 4867a8b47a8c324319a4c239e967bcfc -           1164   5.1e-41  126.6   2.2   2   2   0.00096   0.00096    5.7   0.0   105   140  1128  1160  1047  1163 0.72 delta endotoxin
 Endotoxin_C          PF03944.13   143 9011cf1482420595b5abd80679d205d4 -           1169   1.2e-50  157.7   1.4   1   1   4.9e-50   4.9e-50  155.8   0.8     1   142   459   595   459   596 0.97 delta endotoxin
 Endotoxin_C          PF03944.13   143 bed3fb6a4d2943a5af6195723bc11ebb -            649   1.4e-41  128.4   0.6   1   1   1.4e-41   1.4e-41  128.4   0.6     1   143   512   649   512   649 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 ec044e3bf455380f0bf566315e1180fc -            723   5.1e-39  120.1   0.9   1   1   1.2e-38   1.2e-38  118.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
-Endotoxin_C          PF03944.13   143 0976ca3a96aeba709b8cfae5248cef5e -           1263   7.5e-15   41.7   2.9   1   1   7.5e-15   7.5e-15   41.7   2.9     1   142   527   677   527   678 0.71 delta endotoxin
+Endotoxin_C          PF03944.13   143 0976ca3a96aeba709b8cfae5248cef5e -           1263   7.5e-15   41.7   2.9   1   2   7.5e-15   7.5e-15   41.7   2.9     1   142   527   677   527   678 0.71 delta endotoxin
+Endotoxin_C          PF03944.13   143 0976ca3a96aeba709b8cfae5248cef5e -           1263   7.5e-15   41.7   2.9   2   2   0.00064   0.00064    6.3   0.8    74   140  1199  1257  1176  1259 0.58 delta endotoxin
 Endotoxin_C          PF03944.13   143 1c1e44a62b5bd6213de191fe208273ce -            618   4.5e-39  120.3   0.9   1   1   9.5e-39   9.5e-39  119.2   0.9     1   143   470   608   470   608 0.94 delta endotoxin
-Endotoxin_C          PF03944.13   143 3ba27a5b966e1c7ce1d8654438f0715c -           1156   5.1e-46  142.8   6.5   1   1     1e-43     1e-43  135.3   1.6     1   143   515   657   515   657 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 3ba27a5b966e1c7ce1d8654438f0715c -           1156   5.1e-46  142.8   6.5   1   2     1e-43     1e-43  135.3   1.6     1   143   515   657   515   657 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 3ba27a5b966e1c7ce1d8654438f0715c -           1156   5.1e-46  142.8   6.5   2   2   0.00012   0.00012    8.6   0.0   100   140  1119  1152  1058  1155 0.65 delta endotoxin
 Endotoxin_C          PF03944.13   143 12ec5d3c68da54152c287878aa44e664 -           1169   1.2e-37  115.6   4.8   1   1   1.2e-37   1.2e-37  115.6   4.8     1   143   522   658   522   658 0.91 delta endotoxin
 Endotoxin_C          PF03944.13   143 a137725c5b9e7e52436913939514fe8f -           1164   6.4e-41  126.2   1.4   1   1   9.3e-41   9.3e-41  125.7   0.1     1   143   460   592   460   592 0.95 delta endotoxin
 Endotoxin_C          PF03944.13   143 53555f0d2e4fae584c9b956e586e5c50 -           1118   1.6e-48  150.9   2.0   1   1   3.3e-48   3.3e-48  149.9   2.0     1   142   471   607   471   608 0.96 delta endotoxin
@@ -267,7 +282,8 @@ Endotoxin_C          PF03944.13   143 d6dff8f1a3ea541ae059a420ca61b7c6 -        
 Endotoxin_C          PF03944.13   143 9835a3691cd4fc189ce9a902071caf6b -           1182   8.7e-39  119.3   0.9   1   1   2.6e-38   2.6e-38  117.8   0.9     1   143   491   629   491   629 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 9e4a19cae35b962a2cce520a8a0d2f64 -           1233   1.7e-38  118.4   3.2   1   1   3.3e-38   3.3e-38  117.4   2.1     1   143   503   641   503   641 0.94 delta endotoxin
 Endotoxin_C          PF03944.13   143 b6d2580b63c51c69389ac58f34703e4d -           1169   2.1e-51  160.2   2.3   1   1   2.1e-51   2.1e-51  160.2   2.3     1   142   464   599   464   600 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 54212292e85a6eba9760b70c9df49e40 -           1194   2.8e-39  120.9  12.7   1   1   2.6e-37   2.6e-37  114.6   0.2     1   143   526   665   526   665 0.92 delta endotoxin
+Endotoxin_C          PF03944.13   143 54212292e85a6eba9760b70c9df49e40 -           1194   2.8e-39  120.9  12.7   1   2   2.6e-37   2.6e-37  114.6   0.2     1   143   526   665   526   665 0.92 delta endotoxin
+Endotoxin_C          PF03944.13   143 54212292e85a6eba9760b70c9df49e40 -           1194   2.8e-39  120.9  12.7   2   2   1.5e-05   1.5e-05   11.6   2.7    55   140  1097  1190  1069  1192 0.69 delta endotoxin
 Endotoxin_C          PF03944.13   143 d6d7c81d2621ec49b58ba09af787ad49 -           1235   1.9e-41  128.0   2.7   1   1   7.8e-41   7.8e-41  126.0   2.1     1   143   511   647   511   647 0.93 delta endotoxin
 Endotoxin_C          PF03944.13   143 45083b717cdcd300715990e2f795c4cd -           1188   7.8e-44  135.7   0.4   1   1   7.8e-44   7.8e-44  135.7   0.4     1   143   473   610   473   610 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 f0fdae8993c51296b6ba4e9d48e49054 -           1177   2.5e-38  117.8   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   470   608   470   608 0.94 delta endotoxin
@@ -280,7 +296,8 @@ Endotoxin_C          PF03944.13   143 eff1733c6a62959e59bf9d5f5bb06997 -        
 Endotoxin_C          PF03944.13   143 e9e158bfc1591c171577c29af32752d2 -           1189   8.2e-40  122.7   0.1   1   1   2.1e-39   2.1e-39  121.4   0.1     1   141   467   614   467   616 0.91 delta endotoxin
 Endotoxin_C          PF03944.13   143 62d5beb216b0cce3df862705f2bc2696 -           1165   3.2e-41  127.2   0.1   1   1   9.3e-41   9.3e-41  125.7   0.1     1   143   460   592   460   592 0.95 delta endotoxin
 Endotoxin_C          PF03944.13   143 0826e6e2f3bc765263a0c61e118425ea -           1178   2.5e-38  117.8   0.9   1   1   2.5e-38   2.5e-38  117.8   0.9     1   143   471   609   471   609 0.94 delta endotoxin
-Endotoxin_C          PF03944.13   143 5ddf461f9169f54c1dbab868214256a4 -           1289     2e-11   30.7   1.5   1   1     2e-11     2e-11   30.7   1.5    23   140   576   712   551   715 0.76 delta endotoxin
+Endotoxin_C          PF03944.13   143 5ddf461f9169f54c1dbab868214256a4 -           1289     2e-11   30.7   1.5   1   2     2e-11     2e-11   30.7   1.5    23   140   576   712   551   715 0.76 delta endotoxin
+Endotoxin_C          PF03944.13   143 5ddf461f9169f54c1dbab868214256a4 -           1289     2e-11   30.7   1.5   2   2   0.00018   0.00018    8.1   2.8    80   140  1231  1284  1201  1286 0.66 delta endotoxin
 Endotoxin_C          PF03944.13   143 fa7af2e7ca004b9f9528f1a1ce553bd6 -           1167   9.9e-50  154.8   2.4   1   1   3.3e-49   3.3e-49  153.1   2.4     1   142   459   594   459   595 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 9e7b7917742a596f49865640eaab473a -           1170   3.1e-46  143.5   0.2   1   1   1.5e-45   1.5e-45  141.3   0.1     1   143   459   596   459   596 0.98 delta endotoxin
 Endotoxin_C          PF03944.13   143 55e12dc73cbbe6c3641a010e189ea4b8 -           1136   4.4e-41  126.8   1.4   1   1   4.4e-41   4.4e-41  126.8   1.4     1   143   480   634   480   634 0.96 delta endotoxin
@@ -315,7 +332,8 @@ Endotoxin_C          PF03944.13   143 9256021d2800b1da51c723c0f755d94c -        
 Endotoxin_C          PF03944.13   143 0cc6821e0444dca218eb5125c33b8e26 -            705   6.8e-51  158.6   1.0   1   1   1.8e-50   1.8e-50  157.2   1.0     1   143   507   644   507   644 0.97 delta endotoxin
 Endotoxin_C          PF03944.13   143 70b33d443b6a6aea0a46258066a5d218 -            644   2.6e-43  134.0   1.0   1   1   2.6e-43   2.6e-43  134.0   1.0     1   143   509   644   509   644 0.96 delta endotoxin
 Endotoxin_C          PF03944.13   143 8d2c683baa33d186155bfd7691869775 -           1176   3.5e-48  149.8   2.0   1   1   3.5e-48   3.5e-48  149.8   2.0     1   142   470   606   470   607 0.96 delta endotoxin
-Endotoxin_C          PF03944.13   143 58916c8ef9e304e77c82f55347fa918b -           1157   9.1e-48  148.4   0.5   1   1   9.1e-48   9.1e-48  148.4   0.5     1   143   526   662   526   662 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 58916c8ef9e304e77c82f55347fa918b -           1157   9.1e-48  148.4   0.5   1   2   9.1e-48   9.1e-48  148.4   0.5     1   143   526   662   526   662 0.96 delta endotoxin
+Endotoxin_C          PF03944.13   143 58916c8ef9e304e77c82f55347fa918b -           1157   9.1e-48  148.4   0.5   2   2   0.00088   0.00088    5.8   1.1    43   140  1064  1153  1042  1154 0.65 delta endotoxin
 Endotoxin_C          PF03944.13   143 f9a628bfc60208f67bd8ca8fabe2e97c -            633   8.2e-17   48.1   8.1   1   1   4.2e-16   4.2e-16   45.8   7.6     2   143   495   628   494   628 0.87 delta endotoxin
 Endotoxin_C          PF03944.13   143 a5a6a0a3eb55f5817d7c00ede86e79fa -           1168     4e-39  120.4   1.3   1   1   1.1e-38   1.1e-38  119.0   1.3     1   143   457   596   457   596 0.92 delta endotoxin
 Endotoxin_C          PF03944.13   143 70a5a889eb5bef962cdb3c79254562fb -            679   1.6e-42  131.4   3.5   1   1   4.8e-42   4.8e-42  129.9   3.5     1   143   500   654   500   654 0.89 delta endotoxin
@@ -345,7 +363,7 @@ Endotoxin_C          PF03944.13   143 ad2a670a4bd384f55dcdb931b0f566c5 -        
 # Pipeline mode:   SCAN
 # Query file:      sg_putative_10000.faa
 # Target file:     ./endotoxins-hmm/Endotoxin_C.hmm
-# Option settings: hmmscan --domtblout out_endoC_training.txt --noali --domE 1e-05 --cpu 8 ./endotoxins-hmm/Endotoxin_C.hmm sg_putative_10000.faa 
+# Option settings: hmmscan --domtblout hmm/out_endoC_training.txt --noali --domE 0.001 --cpu 8 ./endotoxins-hmm/Endotoxin_C.hmm sg_putative_10000.faa 
 # Current dir:     /Users/jdreux/PycharmProjects/protein-classification
-# Date:            Mon Sep 25 14:00:52 2017
+# Date:            Mon Sep 25 17:59:26 2017
 # [ok]

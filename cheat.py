@@ -15,11 +15,11 @@ losers = test_df[~test_df['id'].isin(money.keys())]
 test_df['label'] =0
 test_df.set_value(test_df['id'].isin(money.keys()), 'label', 1)
 
-
-
-test_df.corr()['label'][test_df.corr()['label'] > 0.8]
-
-
 winners['count_M', 'count_N', 'count_C']
+
+
+
+
+
 
 

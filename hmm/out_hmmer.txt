@@ -139,7 +139,7 @@ Endotoxin_N          PF03945.13   223 bd927a093160f7e547ed179945a1652b -        
 # Pipeline mode:   SCAN
 # Query file:      training_seqs_valid.fasta
 # Target file:     /Users/jdreux/Desktop/hmm/Pfam-A.hmm
-# Option settings: hmmscan --domtblout out_hmmer.txt --noali --domE 1e-05 --cpu 8 /Users/jdreux/Desktop/hmm/Pfam-A.hmm training_seqs_valid.fasta 
+# Option settings: hmmscan --domtblout hmm/out_hmmer.txt --noali --domE 1e-05 --cpu 8 /Users/jdreux/Desktop/hmm/Pfam-A.hmm training_seqs_valid.fasta 
 # Current dir:     /Users/jdreux/PycharmProjects/protein-classification
-# Date:            Mon Sep 25 14:00:14 2017
+# Date:            Mon Sep 25 17:56:41 2017
 # [ok]

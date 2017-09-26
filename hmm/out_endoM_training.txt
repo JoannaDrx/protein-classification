@@ -25,7 +25,8 @@ Endotoxin_M          PF00555.18   205 cae6f136325a3165e107a30adebf0b5a -        
 Endotoxin_M          PF00555.18   205 e53994e7454d31d1a1f23e0f4353e666 -           1177   1.7e-60  190.7   2.8   1   1   4.2e-60   4.2e-60  189.4   2.8     1   205   259   460   259   460 0.95 delta endotoxin
 Endotoxin_M          PF00555.18   205 b787b5e2730ea4a70e01236216e14359 -           1174   2.3e-43  134.8   3.7   1   1   2.3e-43   2.3e-43  134.8   3.7     1   205   293   514   293   514 0.88 delta endotoxin
 Endotoxin_M          PF00555.18   205 d854867a8ba84133238b5b8df764c9a8 -           1168   1.1e-55  175.0   7.1   1   1   1.1e-55   1.1e-55  175.0   7.1     1   205   258   447   258   447 0.96 delta endotoxin
-Endotoxin_M          PF00555.18   205 f4a81f5b8b984ed41680d813d5d2198d -           1185   1.7e-50  158.0   4.1   1   1   1.7e-50   1.7e-50  158.0   4.1     1   205   300   509   300   509 0.90 delta endotoxin
+Endotoxin_M          PF00555.18   205 f4a81f5b8b984ed41680d813d5d2198d -           1185   1.7e-50  158.0   4.1   1   2   1.7e-50   1.7e-50  158.0   4.1     1   205   300   509   300   509 0.90 delta endotoxin
+Endotoxin_M          PF00555.18   205 f4a81f5b8b984ed41680d813d5d2198d -           1185   1.7e-50  158.0   4.1   2   2   0.00046   0.00046    6.4   3.2    82   142  1106  1166  1088  1179 0.79 delta endotoxin
 Endotoxin_M          PF00555.18   205 b9a62bbae937d7e103d5b36c02cbdd49 -           1178   1.5e-59  187.6   2.2   1   1     4e-59     4e-59  186.2   2.2     1   205   259   461   259   461 0.95 delta endotoxin
 Endotoxin_M          PF00555.18   205 f7ed0d2bc04deb7beb13bd41177e180f -            687   4.6e-27   81.5   3.1   1   1   4.6e-27   4.6e-27   81.5   3.1     1   203   276   481   276   483 0.84 delta endotoxin
 Endotoxin_M          PF00555.18   205 3d720ce2a372b49e3264b0e7cffbda67 -           1167   2.8e-56  176.9   1.1   1   1   2.8e-56   2.8e-56  176.9   1.1     1   205   258   449   258   449 0.98 delta endotoxin
@@ -117,7 +118,8 @@ Endotoxin_M          PF00555.18   205 24c6e7ed6f6968c01727f119a263303d -        
 Endotoxin_M          PF00555.18   205 24464945e46efca41768f2f0e6cbf569 -            608   7.1e-61  191.9   2.8   1   1   1.3e-60   1.3e-60  191.1   2.8     1   205   259   460   259   460 0.95 delta endotoxin
 Endotoxin_M          PF00555.18   205 dcd98e511d520d32a7ee419dd422e6a6 -            665   8.1e-36  110.1   3.8   1   1     2e-35     2e-35  108.8   3.8     1   204   290   501   290   502 0.89 delta endotoxin
 Endotoxin_M          PF00555.18   205 ec3ac894ec76b5d9d8c89a7b13bf7543 -           1164   1.7e-60  190.7   2.8   1   1   4.2e-60   4.2e-60  189.4   2.8     1   205   252   453   252   453 0.95 delta endotoxin
-Endotoxin_M          PF00555.18   205 9714db6be08c111288fbaa471d57f650 -           1283   2.6e-15   43.1   0.0   1   1   2.1e-12   2.1e-12   33.6   0.0     1    89   314   401   314   420 0.88 delta endotoxin
+Endotoxin_M          PF00555.18   205 9714db6be08c111288fbaa471d57f650 -           1283   2.6e-15   43.1   0.0   1   2   2.1e-12   2.1e-12   33.6   0.0     1    89   314   401   314   420 0.88 delta endotoxin
+Endotoxin_M          PF00555.18   205 9714db6be08c111288fbaa471d57f650 -           1283   2.6e-15   43.1   0.0   2   2    0.0003    0.0003    7.0   0.0   169   204   497   539   461   540 0.81 delta endotoxin
 Endotoxin_M          PF00555.18   205 d95aa4ea1f720778e29f9404e6bff6c3 -            620   5.5e-55  172.7   0.1   1   1   5.5e-55   5.5e-55  172.7   0.1     1   205   259   460   259   460 0.93 delta endotoxin
 Endotoxin_M          PF00555.18   205 8b2b266b29a1610ce4f52d08f9148127 -           1154   4.6e-34  104.4   4.6   1   1   4.6e-34   4.6e-34  104.4   4.6     3   205   294   505   292   505 0.90 delta endotoxin
 Endotoxin_M          PF00555.18   205 127c4082991b04055f1c26207092bf6e -            688   9.6e-24   70.7   7.3   1   1   9.6e-24   9.6e-24   70.7   7.3     1   205   309   516   309   516 0.81 delta endotoxin
@@ -276,7 +278,8 @@ Endotoxin_M          PF00555.18   205 8e141c596dcc11a535de387df35f42b7 -        
 Endotoxin_M          PF00555.18   205 71e9188e99cc0c8a0dc9fc43ab0ae40b -           1228   3.7e-67  212.5   7.5   1   1   3.7e-67   3.7e-67  212.5   7.5     1   205   278   489   278   489 0.96 delta endotoxin
 Endotoxin_M          PF00555.18   205 da9278464f38d7324df43f8fff2f4696 -           1267   5.2e-16   45.4   0.8   1   1   2.3e-15   2.3e-15   43.3   0.8     1   205   306   513   306   513 0.81 delta endotoxin
 Endotoxin_M          PF00555.18   205 57b398e481bc1a52163f24f122fdbd7f -           1426   1.2e-18   54.0   0.0   1   1   3.5e-18   3.5e-18   52.5   0.0     1   205   305   523   305   523 0.86 delta endotoxin
-Endotoxin_M          PF00555.18   205 5030be9a902dc70c275f64b298b4b003 -           1078   1.3e-08   21.2  17.5   1   1   1.7e-08   1.7e-08   20.9   5.3     1   116   294   409   294   421 0.79 delta endotoxin
+Endotoxin_M          PF00555.18   205 5030be9a902dc70c275f64b298b4b003 -           1078   1.3e-08   21.2  17.5   1   2   1.7e-08   1.7e-08   20.9   5.3     1   116   294   409   294   421 0.79 delta endotoxin
+Endotoxin_M          PF00555.18   205 5030be9a902dc70c275f64b298b4b003 -           1078   1.3e-08   21.2  17.5   2   2   0.00039   0.00039    6.6   0.6   150   204   394   454   375   455 0.72 delta endotoxin
 Endotoxin_M          PF00555.18   205 3c11e1db7f55491355f341866eb84e51 -           1168     1e-55  175.1   0.4   1   1     1e-55     1e-55  175.1   0.4     1   205   257   454   257   454 0.94 delta endotoxin
 Endotoxin_M          PF00555.18   205 ad2a670a4bd384f55dcdb931b0f566c5 -           1155   9.1e-59  185.1   1.9   1   1   9.1e-59   9.1e-59  185.1   1.9     1   205   259   461   259   461 0.95 delta endotoxin
 #
@@ -285,7 +288,7 @@ Endotoxin_M          PF00555.18   205 ad2a670a4bd384f55dcdb931b0f566c5 -        
 # Pipeline mode:   SCAN
 # Query file:      sg_putative_10000.faa
 # Target file:     ./endotoxins-hmm/Endotoxin_M.hmm
-# Option settings: hmmscan --domtblout out_endoM_training.txt --noali --domE 1e-05 --cpu 8 ./endotoxins-hmm/Endotoxin_M.hmm sg_putative_10000.faa 
+# Option settings: hmmscan --domtblout hmm/out_endoM_training.txt --noali --domE 0.001 --cpu 8 ./endotoxins-hmm/Endotoxin_M.hmm sg_putative_10000.faa 
 # Current dir:     /Users/jdreux/PycharmProjects/protein-classification
-# Date:            Mon Sep 25 14:00:59 2017
+# Date:            Mon Sep 25 17:59:33 2017
 # [ok]

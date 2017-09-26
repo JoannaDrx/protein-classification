@@ -1,4 +1,4 @@
-""""""
+"""Data Collection fns"""
 
 import os
 import pandas as pd
@@ -8,7 +8,38 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 from pydpi.pypro import PyPro
 from Bio.Blast.Applications import NcbiblastpCommandline
-import pickle
+
+
+# cwd
+os.chdir('/Users/jdreux/PycharmProjects/protein-classification/')
+
+### Collect data from the training set  ###
+# Load the training set data
+ts = pd.read_csv('drugpro_training_set.csv', header=0)
+id_list = list(ts['id'])
+print ts.groupby('label').size()
+# label
+# 0    220
+# 1     44
+
+# Write FASTAs from training set data
+valid_fasta = 'training_seqs_valid.fasta'
+all_fasta = 'training_seqs_all.fasta'
+valid_list = []
+all_prots = []
+
+for id, seq, label in ts.itertuples(index=False):
+    seq_record = SeqRecord(Seq(seq, IUPAC.protein), id=id, description="Label:"+str(label), name="")
+    all_prots.append(seq_record)
+    if label == 1:
+            valid_list.append(seq_record)
+
+handle = open(valid_fasta, "w")
+for sequences in valid_list:
+    SeqIO.write(sequences, handle, "fasta")
+handle2 = open(all_fasta, "w")
+for sequences in all_prots:
+    SeqIO.write(sequences, handle2, "fasta")
 
 
 # write fns for data collection
@@ -19,7 +50,7 @@ def collect_blast_data(query, subject, id_list, out):
 
     # run the BLASTp job
     print 'Running BLASTp job...'
-    blastp_cline = NcbiblastpCommandline(query=query, subject=subject, evalue=1e-5, outfmt=6, out=out)
+    blastp_cline = NcbiblastpCommandline(query=query, subject=subject, evalue=1e-3, outfmt=6, out=out)
     stdout, stderr = blastp_cline()
 
     # read & filter the blast results
@@ -83,54 +114,33 @@ def collect_hmm_data(pfam_db, threshold, subject, suffix, id_list, out):
     return df
 
 
-# cwd
-os.chdir('/Users/jdreux/PycharmProjects/protein-classification/')
-
-
-### Collect data from the training set  ###
-# Load the training set data
-ts = pd.read_csv('drugpro_training_set.csv', header=0)
-id_list = list(ts['id'])
-ts.groupby('label').size()
-# label
-# 0    220
-# 1     44
-
-# Write FASTAs from training set data
-valid_fasta = 'training_seqs_valid.fasta'
-all_fasta = 'training_seqs_all.fasta'
-valid_list = []
-all_prots = []
-for id, seq, label in ts.itertuples(index=False):
-    seq_record = SeqRecord(Seq(seq, IUPAC.protein), id=id, description="Label:"+str(label), name="")
-    all_prots.append(seq_record)
-    if label == 1:
-            valid_list.append(seq_record)
-handle = open(valid_fasta, "w")
-for sequences in valid_list:
-    SeqIO.write(sequences, handle , "fasta")
-handle2 = open(all_fasta, "w")
-for sequences in all_prots:
-    SeqIO.write(sequences, handle2, "fasta")
-
-
 # Collect BLASTp data - sequence homology #
 df_blast =  collect_blast_data(all_fasta, valid_fasta, id_list, 'blastp_out_training.tab')
 print 'BLASTp table: {}'.format(df_blast.columns)
 
+# Collected BLAST df: (264, 5)
+# BLASTp table: Index([u'qseqid', u'pident', u'len', u'evalue', u'bitscore'], dtype='object')
+
 
 # Collect domain similarity data #
 # first, run valid prots against Pfam-A.hmm to find domains of interest
-df_hmm = collect_hmm_data('/Users/jdreux/Desktop/hmm/Pfam-A.hmm', 1e-5, valid_fasta, '', id_list, 'out_hmmer.txt')
+df_hmm = collect_hmm_data('/Users/jdreux/Desktop/hmm/Pfam-A.hmm', 1e-5, valid_fasta, '', id_list, 'hmm/out_hmmer.txt')
+
 print len(set(df_hmm['qname'])) # all valid proteins are represented
+# 44
+
 print set(df_hmm['acc'])  # only 3 domains are aligned to by the valid proteins
+# set(['PF03945.13', 'PF00555.18', 'PF03944.13'])
+
 print set(df_hmm.groupby('qname')['acc'].count())  # and they all have all 3
+# set([3])
+
 
 # We run the analysis again but against each domain of interest individually
 # use .hmm files obtained from - http://pfam.xfam.org/
-df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-5, all_fasta, 'C', id_list, 'out_endoC_training.txt')
-df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-5, all_fasta, 'M', id_list, 'out_endoM_training.txt')
-df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-5, all_fasta, 'N', id_list, 'out_endoN_training.txt')
+df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-3, all_fasta, 'C', id_list, 'hmm/out_endoC_training.txt')
+df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-3, all_fasta, 'M', id_list, 'hmm/out_endoM_training.txt')
+df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-3, all_fasta, 'N', id_list, 'hmm/out_endoN_training.txt')
 
 # Concat all 3 domain tables into one
 assert df_C.shape == df_M.shape == df_N.shape
@@ -143,7 +153,15 @@ for df in dfs:
     df.reset_index(drop=True, inplace=True)
 df_endo = pd.concat(dfs, ignore_index=True, axis=1)
 df_endo.columns = list(df_C.columns) + list(df_Mf.columns) + list(df_Nf.columns)
+
 print 'Endotoxin domains table ({}): {}'.format(df_endo.shape, df_endo.columns)
+# Endotoxin domains table ((264, 22)): Index([u'qname_C', u'e-value_C', u'score_C', u'c-evalue_C', u'i-evalue_C',
+       # u'domain-score_C', u'reliability_C', u'count_C', u'e-value_M',
+       # u'score_M', u'c-evalue_M', u'i-evalue_M', u'domain-score_M',
+       # u'reliability_M', u'count_M', u'e-value_N', u'score_N', u'c-evalue_N',
+       # u'i-evalue_N', u'domain-score_N', u'reliability_N', u'count_N'],
+       # dtype='object')
+
 
 # Collect physicochemical features homology -- pydpi ##
 print 'Collecting physicochemical stats per protein...'
@@ -200,9 +218,9 @@ df_bl =  collect_blast_data(query, valid_fasta, id_list_test, 'blastp_out_test.t
 print 'BLASTp table: {}'.format(df_bl.columns)
 
 # Collect domain similarity data
-df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-5, query, 'C', id_list_test, 'out_endoC_training.txt')
-df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-5, query, 'M', id_list_test, 'out_endoM_training.txt')
-df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-5, query, 'N', id_list_test, 'out_endoN_training.txt')
+df_C = collect_hmm_data('./endotoxins-hmm/Endotoxin_C.hmm', 1e-3, query, 'C', id_list_test, 'hmm/out_endoC_training.txt')
+df_M = collect_hmm_data('./endotoxins-hmm/Endotoxin_M.hmm', 1e-3, query, 'M', id_list_test, 'hmm/out_endoM_training.txt')
+df_N = collect_hmm_data('./endotoxins-hmm/Endotoxin_N.hmm', 1e-3, query, 'N', id_list_test, 'hmm/out_endoN_training.txt')
 
 # Concat all 3 domain tables into one
 assert df_C.shape == df_M.shape == df_N.shape
@@ -254,6 +272,18 @@ for df in dfs:
     df.reset_index(drop=True, inplace= True)
 master_test = pd.concat(dfs, axis=1, ignore_index=True)
 master_test.columns = list(df_de.columns) + list(df_bl.columns) + list(df_en.columns)
+
 print 'Built master df ({}): {}'.format(master_test.shape, master_test.columns)
+# Built master df ((10000, 287)): Index([u'id', u'seq_length', u'MoreauBrotoAuto_ResidueASA27',
+#       u'MoreauBrotoAuto_ResidueASA26', u'MoreauBrotoAuto_ResidueASA25',
+#       u'MoreauBrotoAuto_ResidueASA24', u'MoreauBrotoAuto_ResidueASA23',
+#       u'MoreauBrotoAuto_ResidueASA22', u'MoreauBrotoAuto_ResidueASA21',
+#       u'MoreauBrotoAuto_ResidueASA20',
+#       ...
+#       u'domain-score_M', u'reliability_M', u'count_M', u'e-value_N',
+#       u'score_N', u'c-evalue_N', u'i-evalue_N', u'domain-score_N',
+#       u'reliability_N', u'count_N'],
+#      dtype='object', length=287)
+
 
 master_test.to_pickle('putative_set.pkl')
