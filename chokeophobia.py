@@ -18,6 +18,17 @@ import pickle
 training_df = pickle.load(open('training_set.pkl', "rb"))
 test_df = pickle.load(open('putative_set.pkl', "rb"))
 
+# plot the data
+X = training_df.ix[:,2:].values
+y = training_df['label']
+pca = PCA(n_components=2)
+X_r = pca.fit(X).transform(X)
+plt.figure()
+for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
+    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+
+
 ### Feature Selection ###
 array = training_df.values
 X = array[:,2:]
@@ -49,11 +60,12 @@ def feature_selection(X, Y, feature_names, num):
     return list(set(k+n))
 
 
-sel_features = feature_selection(X, Y, feature_names, 100)  # select for 100 features
+sel_features = feature_selection(X, Y, feature_names, 200)  # select for 200 features
 
 # filter dfs on selected features
 training = training_df[['id', 'label'] + sel_features]
 test = test_df[['id'] + sel_features]
+
 
 ## Model selection ###
 def validation_set(df, num):
@@ -91,7 +103,7 @@ def compare_models(X_train, X_validation, Y_validation, Y_train):
 
 
 # make validation/training sets
-xt, xv, yt, yv = validation_set(training, 0.2)
+xt, xv, yt, yv = validation_set(training, 0)
 compare_models(xt, xv, yv, yt)
 
 
@@ -102,24 +114,21 @@ def run_models(X_train, Y_train, test_array):
     lr = LogisticRegression()
     lr.fit(X_train, Y_train)
     p1 = lr.predict(test_array)
-    s, m1 = score(p1)
-    print 'LR: {}'.format(s)
+    print 'LR: {}'.format(score(p1))
 
     # knn
     knn = KNeighborsClassifier()
     knn.fit(X_train, Y_train)
     p2 = knn.predict(test_array)
-    s, m2 = score(p2)
-    print 'KNN: {}'.format(s)
+    print 'KNN: {}'.format(score(p2))
 
     # lvc
     lvc = LinearSVC()
     lvc.fit(X_train, Y_train)
     p3 = lvc.predict(test_array)
-    s, m3 = score(p3)
-    print 'LinearSVC: {}'.format(s)
+    print 'LinearSVC: {}'.format(score(p3))
 
-    return m1, m2, m3
+    return p1, p2, p3
 
 
 def score(predictions):
@@ -131,45 +140,28 @@ def score(predictions):
     df = pickle.load(open('putative_set.pkl', "rb"))
 
     df['label'] = predictions
-    match = list(df[df['label'] == 1]['id'])
+    match = list(df[df['label'] != 0]['id'])
 
     # add up your $$$
     total = 0
-    p_match = []
     for k, v in money.iteritems():
         if k in match:
             total += v
-            p_match += k
-    return total, p_match
+    return total
 
 
 p1, p2, p3 = run_models(training[sel_features], training['label'], test[sel_features])
 
-# get all the predictions together
-final = test['id']
-final['p1'] = p1
-final['p2'] = p2
-final['p3'] = p3
+final = test
+final['label'] = p3
 
-
-### PLOTS ####
 # plot the data
-matches = training_df[training_df['label'] == 1]  # valid prots
-non_matches = training_df[training_df['label'] == 0]  # invalid prots
-fig, axes = plt.subplots(6, 4)
-for ax, val in zip(axes.flatten(), [training_df['count_M'], training_df['count_N'],training_df['count_C']]):
-    ax.hist(matches[val].values, alpha=0.5)
-    ax.hist(non_matches[val].values, alpha=0.5)
-    ax.set_title(val)
-fig.set_tight_layout(True)
-
-# PCA
-X = training_df.ix[:,2:].values
-y = training_df['label']
+X = final.ix[:,1:-1].values
+y = final['label']
 pca = PCA(n_components=2)
 X_r = pca.fit(X).transform(X)
-print 'Pct variance explained by top 2 components: {}'.format(str(pca.explained_variance_ratio_))
 plt.figure()
 for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
     plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
 plt.legend(loc='best', shadow=False, scatterpoints=1)
+
