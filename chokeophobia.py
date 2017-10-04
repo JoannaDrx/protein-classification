@@ -12,10 +12,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.feature_selection import SelectFromModel
 import matplotlib.pyplot as plt
 import pickle
+from sklearn import preprocessing
 
 # Import the pickled master dfs
 training_df = pickle.load(open('training_set.pkl', "rb"))
 test_df = pickle.load(open('putative_set.pkl', "rb"))
+
 
 # plot the data
 X = training_df.ix[:,2:].values
@@ -23,15 +25,21 @@ y = training_df['label']
 pca = PCA(n_components=2)
 X_r = pca.fit(X).transform(X)
 plt.figure()
+for color, i in zip(['navy', 'darkorange'], [0, 1]):
+    plt.scatter(X_r[y[y == i].index, 0], X_r[y[y == i].index, 1], color=color, alpha=.8, lw=2, label=str(i))
+plt.legend(loc='best', shadow=False, scatterpoints=1)
+
+# data normalization
+X_scaled = preprocessing.scale(X)
+# plot the normalized data
+X_rs = pca.fit(X_scaled).transform(X_scaled)
+plt.figure()
 for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
-    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+    plt.scatter(X_rs[y[y == i].index, 0], X_rs[y[y == i].index, 1], color=color, alpha=.8, lw=2,label=target_name)
 plt.legend(loc='best', shadow=False, scatterpoints=1)
 
 
 ### Feature Selection ###
-array = training_df.values
-X = array[:,2:]
-Y = list(array[:,1])  # labels
 feature_names = list(training_df.columns[2:])
 
 
@@ -59,7 +67,7 @@ def feature_selection(X, Y, feature_names, num):
     return list(set(k+n))
 
 
-sel_features = feature_selection(X, Y, feature_names, 20)  # select for 200 features
+sel_features = feature_selection(X, y, feature_names, 200)  # select for 200 features
 
 # filter dfs on selected features
 training = training_df[['id', 'label'] + sel_features]
@@ -153,10 +161,11 @@ for df in [df_p1, df_p2]:
     X = df.ix[:,1:-1].values
     y = df['label']
     pca = PCA(n_components=2)
+    X = preprocessing.scale(X)
     X_r = pca.fit(X).transform(X)
     plt.figure()
     for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
-        plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+        plt.scatter(X_r[y[y == i].index, 0], X_r[y[y == i].index, 1], color=color, alpha=.8, lw=2,label=target_name)
     plt.legend(loc='best', shadow=False, scatterpoints=1)
 
 
@@ -176,9 +185,10 @@ t= test.assign(label=l)
 X = t.ix[:,1:-1].values
 y = t['label']
 pca = PCA(n_components=2)
+X = preprocessing.scale(X)
 X_r = pca.fit(X).transform(X)
 plt.figure()
 for color, i, target_name in zip(['navy', 'darkorange'], [0, 1], ['0', '1']):
-    plt.scatter(X_r[y == i, 0], X_r[y == i, 1], color=color, alpha=.8, lw=2,label=target_name)
+    plt.scatter(X_r[y[y == i].index, 0], X_r[y[y == i].index, 1], color=color, alpha=.8, lw=2,label=target_name)
 plt.legend(loc='best', shadow=False, scatterpoints=1)
 
