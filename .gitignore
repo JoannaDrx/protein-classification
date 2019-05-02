@@ -1,3 +1,4 @@
 ./idea/
 ./pydpi-indices/
 ./hmm-db/
+.DS_Store
