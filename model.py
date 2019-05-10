@@ -51,7 +51,7 @@ def feature_selection(X, Y, feature_names, num):
     for bool, ft in zip(fit.support_, feature_names):
         if bool:
             k.append(ft)
-    print 'RFE-LR selected features:', k
+    print ('RFE-LR selected features:', k)
 
     # linear SVC
     lsvc = LinearSVC(C=0.01, penalty="l1", dual=False).fit(X, Y)
@@ -60,7 +60,7 @@ def feature_selection(X, Y, feature_names, num):
     for bool, ft in zip(model.get_support(), feature_names):
         if bool:
             n.append(ft)
-    print 'Linear SVC selected features:', n
+    print ('Linear SVC selected features:', n)
 
     return list(set(k+n))
 
@@ -107,7 +107,7 @@ def compare_models(X_train, X_validation, Y_validation, Y_train):
         kfold = model_selection.KFold(n_splits=10, random_state=seed)
         result = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
         results.append(result)
-        print '{}: avg = {}, (std = {})'.format(name, result.mean(), result.std())
+        print ('{}: avg = {}, (std = {})'.format(name, result.mean(), result.std()))
 
     # plot results
     fig = plt.figure()
@@ -131,13 +131,13 @@ def run_models(X_train, Y_train, test_array):
     knn = KNeighborsClassifier()
     knn.fit(X_train, Y_train)
     p1 = knn.predict(test_array)
-    print 'KNN: {}'.format(score(p1))
+    print ('KNN: {}'.format(score(p1)))
 
     # lvc
     lvc = LinearSVC()
     lvc.fit(X_train, Y_train)
     p2 = lvc.predict(test_array)
-    print 'LinearSVC: {}'.format(score(p2))
+    print ('LinearSVC: {}'.format(score(p2)))
 
     return p1, p2
 
