@@ -1,11 +1,5 @@
-# Protein Classification - SG Genomic Data Sicentist Challenge
-_This was my first brush with machine learning, back in mid-2017. I had applied for a position at Second Genome and was sent
- this challenge to complete as part of their technical assesment.
-I've since progressed but I'm leaving it up as I think it's a good example of my reasoning process and how I write code.
-The code, figures and the powerpoint presentation I gave are all in this repo.
-Also: I got the job! - JD_
- 
- 
+# Protein Classification - SG Genomic Data Scientist Challenge
+
  ## Challenge description
 Welcome to the Second Genome - Genomic Data Scientist challenge! Please
 read all instructions carefully.
